@@ -71,7 +71,7 @@
 			// });
 
 			$("input").click(function(){
-        alert("The paragraph was clicked.");
+        //alert("The paragraph was clicked.");
     });
 
 
@@ -90,6 +90,8 @@
 {!!Form::model($candidate, array('route' => array('consejeria.update', $candidate->id),'method'=>'PUT','files'=>true))!!}
 	{!!$form_render!!}
 {!! Form::submit('Termina Proceso',['class'=>'btn btn-primary']) !!}
+{!! link_to_route('consejeria.show', $title = 'Comprobante', $parameters = $candidate->id, $attributes = array('class'=>'btn btn-primary','title'=>'codigo')) !!}
+<!-- <input type="button" class="btn btn-primary" value="Comprobante" onclick="window.location.href = '../../../../phpDocs/ticket.php'" /> -->
 {!! Form::close() !!}
 </div>
 @endsection

@@ -277,8 +277,20 @@ class RenderController extends Controller
                     		case 'select':
         	            		$form_render .= '<select name="'.$campo->nombre.'" id="'.$campo->nombre.'" class="form-control '.$campo->class.'" '.$campo->attr.' style="'.$obligatorio.'" '.$required.'>';
                                 $form_render .= '<option value="">Seleccione</option>';
-
-                                if ($campo->nombre == 'clinica') {
+                                 if ($campo->nombre == 'tipo_consulta') {
+                                    $list_opc = array();
+                                    $idCampaign = DB::selectone('SELECT * FROM candidates WHERE id = \''.$id_registro.'\'');
+                                    $lista_op = DB::selectone('SELECT Consultas FROM campaigns WHERE id = \''.$idCampaign->campaign_id.'\'');
+                                    $list_opc = explode(",", $lista_op->Consultas);
+                                    foreach ($list_opc as $opcion) {
+                                      if ($value == $opcion) {
+                                            $form_render .= '<option value="'.$opcion.'" selected>'.$opcion.'</option>';
+                                        } else {
+                                            $form_render .= '<option value="'.$opcion.'">'.$opcion.'</option>';
+                                        }
+                                    }
+                                }
+                                else if ($campo->nombre == 'clinica') {
                                     $records = $this->getCatalog('clinics');
                                     foreach ($records as $key => $row) {
                                         if ($value == $row->id) {
@@ -300,6 +312,12 @@ class RenderController extends Controller
                                 }
 
                                 $form_render .= '</select>';
+                                break;
+                            case 'selectNum':
+                                if($campo->nombre == 'hora_consulta'){
+                                    $form_render.='<br>';
+                                }
+                                 $form_render .='<input type="time" value="'.$value.'" name="'.$campo->nombre.'"  id="'.$campo->nombre.'" '.$campo->class.'" '.$campo->attr.' style="'.$obligatorio.'" '.$required.'>';
                                 break;
                             case 'checkbox':
                                 $opciones = explode(',', $campo->longitud);

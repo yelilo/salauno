@@ -50,6 +50,10 @@ class candidate extends Model
 		'presion',
 		'glucosa',
 		'firma',
+		'clinica',
+		'fecha_cita',
+		'tipo_consulta',
+		'hora_consulta',
     ];
 
     public function user()

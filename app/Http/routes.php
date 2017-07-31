@@ -27,6 +27,11 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('refraction', 'RefractionController');
 	Route::resource('review', 'ReviewController');
 	Route::resource('seguimiento', 'SeguimientoController');
+	Route::resource('configuracion', 'ConfiguracionController');
+
+	Route::get('modificarCons', function(){
+		return view('configuracion.modify');
+	});
 
 	Route::get('catarata_incipiente', function () {
 		    return view('enfermedades.catarata');

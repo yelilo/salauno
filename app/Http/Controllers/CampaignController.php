@@ -76,6 +76,7 @@ class CampaignController extends Controller
                 $campaign->promocion          = $request->promocion;
                 $campaign->status             = $request->status;
                 $campaign->activo             = $activo;
+                $campaign->Consultas          = $request->consultas;
             $campaign->save();
 
             Session::flash('message-info','Campaña creada corecctamente');
@@ -215,6 +216,7 @@ class CampaignController extends Controller
                 $campaign->promocion          = $request->promocion;
                 $campaign->status             = $request->status;
                 $campaign->activo             = $activo;
+                $campaign->Consultas          = $request->consultas;
             $campaign->save();
 
             Session::flash('message-info', $campaign->codigo.': Cambios generados correctamente :)');

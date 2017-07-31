@@ -20,7 +20,7 @@ class ComposerStaticInit33062197d20b5840a0dc80c614648dbe
     );
 
     public static $prefixLengthsPsr4 = array (
-        'X' => 
+        'X' => .php.php
         array (
             'XdgBaseDir\\' => 11,
         ),

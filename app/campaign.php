@@ -27,7 +27,8 @@ class campaign extends Model
 		'geolocalicacion_longitus',
 		'importe',
 		'ingresos',
-		'activo'
+		'activo',
+		'Consultas',
     ];
 
     public function candidates()

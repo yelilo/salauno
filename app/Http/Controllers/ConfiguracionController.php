@@ -47,6 +47,21 @@ class ConfiguracionController extends Controller
         }
     }
 
+
+    public function show($opciones){
+      return view('configuracion/agregar',['opciones'=>$opciones]);
+    }
+
+    public function modify(Request $request){
+      $nombre = $request->Nuevo;
+      echo($nombre);
+    }
+
+    public function index(){
+      $opciones = DB::select('SELECT * FROM tipo_consultas');
+      return view('configuracion/index',['opciones'=>$opciones]);
+    }
+
     public function sincCandidato($objJson)
     {
         $token = $this->CreaTokent();

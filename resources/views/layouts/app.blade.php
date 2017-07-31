@@ -61,7 +61,7 @@
                             <li><a href="{{ url('/campaign') }}">Campañas</a></li>
                             <li><a href="{{ url('/seguimiento') }}">Seguimiento</a></li>
                             {{-- <li><a href="{{ url('/configuracion') }}">Configuracion</a></li> --}}
-                            {{-- <li><a href="{{ url('/configuracion') }}">Configuracion</a></li> --}}
+                            {{--<li><a href="{{ url('/configuracion') }}">Configuracion</a></li>--}}
                         @endif
                     @endif
                         </ul>
