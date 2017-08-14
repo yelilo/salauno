@@ -9,6 +9,7 @@ use App\Http\Requests\CampaignRequest;
 use App\campaign;
 use App\candidate;
 use App\Http\Requests;
+use App\exploration;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\RenderController;
 use App\Http\Controllers\ConfiguracionController;
@@ -121,6 +122,7 @@ class CampaignController extends Controller
             if ($results != '') {
                 break;
             }
+            $res_presion = DB::selectone('select * from explorations where candidate_id = \''.$candidate->id.'\'');
                 // 'CreatedById'                         => '00536000000uxPYAAY',
             $arrayCandidate = array(
                 'OwnerId'                             => '00536000000uxPYAAY',
@@ -153,7 +155,11 @@ class CampaignController extends Controller
                 'Status'                              => $candidate->status,
                 'Clinica__c'                          => $candidate->clinica,
                 'Fecha_de_cita__c'                    => $candidate->fecha_cita,
-                'Pre_Diagnostico__c'                  => $candidate->pre_diagnostico
+                'Pre_Diagnostico__c'                  => $candidate->pre_diagnostico,
+                'presion_intraocular__c'              => $res_presion->presion_intraocular,
+                'glucosa_capilar__c'                  => $res_presion->glucosa_capilar,
+                'presion_arterial__c'                 => $res_presion->presion_arterial,
+                'presion_estado_medicion__c'          => $res_presion->presion_estado_medicion__c,
             );
 
             $jsonCandidate = json_encode($arrayCandidate);
