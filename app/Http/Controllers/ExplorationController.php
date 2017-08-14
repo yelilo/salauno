@@ -323,9 +323,9 @@ class ExplorationController extends Controller
     public function update(Request $request, $id)
     {
         $candidate = candidate::find($id);
-            $candidate->pre_diagnostico = $request->pre_diagnostico;
-            $candidate->ojo_prediag     = $request->ojo_prediag;
-            $candidate->etapa           = $request->etapa;
+            $candidate->pre_diagnostico         = $request->pre_diagnostico;
+            $candidate->ojo_prediagnostico      = $request->ojo_prediagnostico;
+            $candidate->etapa                   = $request->etapa;
         $candidate->save();
         Session::flash('message','El Candidato "'.$candidate->nombres.' '.$candidate->apellidos.'" se ha enviado a "'.$request->etapa.'"');
         return Redirect::to('exploration');

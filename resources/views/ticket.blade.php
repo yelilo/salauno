@@ -39,7 +39,7 @@
 					<p>Nombre: {{$candidate->nombres}} {{$candidate->apellidos}}</p>
 					<p align="left">Paciente: {{$candidate->codigo}}<br>
 					Campaña: {{$campaign->codigo}}</p>
-					<p>Prediagnostico: {{$candidate->pre_diagnostico}} &nbsp ({{$candidate->ojo_prediag}})</p>
+					<p>Prediagnostico: {{$candidate->pre_diagnostico}} &nbsp ({{$candidate->ojo_prediagnostico}})</p>
 					@if($candidate->status == 'Con cita')
 					<p style="text-align: center;">Información de cita:<p>
 					<p>
