@@ -39,7 +39,7 @@
 					<p>Nombre: {{$candidate->nombres}} {{$candidate->apellidos}}</p>
 					<p align="left">Paciente: {{$candidate->codigo}}<br>
 					Campaña: {{$campaign->codigo}}</p>
-					<p>Prediagnostico: {{$candidate->pre_diagnostico}}</p>
+					<p>Prediagnostico: {{$candidate->pre_diagnostico}} &nbsp ({{$candidate->ojo_prediag}})</p>
 					@if($candidate->status == 'Con cita')
 					<p style="text-align: center;">Información de cita:<p>
 					<p>
@@ -53,7 +53,7 @@
 					?>
 					Consulta: {{$candidate->tipo_consulta}}<br>
 					Clinica: {{$clinica->nombre}}<br>
-					{{$clinica->Direccion}}</p>
+					{{$clinica->direccion}}</p>
 					@endif
 				</strong>
 			</div>

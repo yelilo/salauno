@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use DB;
 use Session;
 use Redirect;
 use App\campaign;
@@ -12,6 +11,7 @@ use App\candidate;
 use App\Http\Requests;
 use App\Http\Controllers\ExplorationController;
 use App\Http\Controllers\RenderController;
+use DB;
 
 class ConsejeriaController extends Controller
 {
@@ -63,13 +63,12 @@ class ConsejeriaController extends Controller
     public function show($id)
     {
         $candidate   = candidate::find($id);
-            $campaign = campaign::find($candidate->campaign_id);
+        $campaign = campaign::find($candidate->campaign_id);
         if($candidate->clinica != null){
             $idClinica = $candidate->clinica;
             $clinica = DB::selectone('SELECT * FROM clinics WHERE id =\''.$idClinica.'\'');
             return view('ticket',['candidate'=>$candidate, 'campaign' => $campaign, 'clinica'=>$clinica]);
-        }
-        //echo($campaign);
+        }        
         return view('ticket',['candidate'=>$candidate, 'campaign' => $campaign]);
     }
 
@@ -96,20 +95,22 @@ class ConsejeriaController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        $candidate   = candidate::find($id);
         $etapa = 'Terminado';
-            $candidate->etapa      = 'Terminado';
-            $candidate->status = $request->status;
+        $candidate = candidate::find($id);
+            $candidate->etapa      = $etapa;
+            $candidate->status     = $request->status;
             $candidate->fecha_cita = $request->fecha_cita;
             $candidate->clinica    = $request->clinica;
             $candidate->tipo_consulta = $request->tipo_consulta;
             $candidate->hora_consulta = $request->hora_consulta;
         $candidate->save();
+        if($request->comprobante) {
+            return $this->show($id);
+        }
         Session::flash('message','El Candidato "'.$candidate->nombres.' '.$candidate->apellidos.'" se ha enviado a Seguimiento');
         return Redirect::to('consejeria');
-    
     }
+
     /**
      * Remove the specified resource from storage.
      *

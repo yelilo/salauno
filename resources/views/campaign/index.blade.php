@@ -24,7 +24,7 @@
               <input type="button" title="Terminada" value="Terminada" name="Terminada" class="btn btn-primary disabled btn-sm">
             @elseif($campaign->status == 'En Proceso')
                 {{-- {!! link_to_route('campaign.show', $title = 'Enviar a SF', $parameters = $campaign->id, $attributes = array('class'=>'btn btn-primary','title'=>'Editar','data-toggle'=>'modal', 'data-target'=>'#myModal')) !!} --}}
-                {!! link_to_route('campaign.show', $title = 'Enviar a SF', $parameters = $campaign->id, $attributes = array('class'=>'btn btn-info btn-sm','title'=>'Editar')) !!}
+                {!! link_to_route('campaign.show', $title = 'Enviar a SF', $parameters = $campaign->id, $attributes = array('class'=>'btn btn-info btn-sm','title'=>'Editar', 'data-loading-text'=>'Espere...', 'id'=>'btnCargar')) !!}
             @else
                 {!! link_to_route('campaign.edit', $title = 'Activar', $parameters = $campaign->id, $attributes = array('class'=>'btn btn-default btn-sm','title'=>'Editar')) !!}
             @endif

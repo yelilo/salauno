@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -58,7 +57,7 @@ class RenderController extends Controller
                                 case 'Exploración':
                                     $url = route('exploration.edit',[$id_registro]);
                                     break;
-                                case 'Resultado de Exploración':
+                                case 'Resultado Exploración':
                                     $url = route('exploration.show',[$id_registro]);
                                     break;
                                 case 'Optica':
@@ -94,16 +93,28 @@ class RenderController extends Controller
 								<div class="panel-body">';
 
             if (($formulario->id == 3 || $formulario->id == 5) && $seccion->nombre != 'candidato') {
-                $form_render .= '<input type="hidden" name="id" id="id" value="'.$id_registro.'">';
-                $form_render .= '<table class="table">
-                                      <thead>
-                                        <tr>
-                                            <th>Descripcion</th>
-                                            <th>Ojo Derecho</th>
-                                            <th>Ojo Izquierdo</th>
-                                        </tr>
-                                      </thead>
-                                      <tbody>';
+                if($seccion->nombre == "presion"){
+                    $form_render .= '<input type="hidden" name="id" id="id" value="'.$id_registro.'">';
+                    $form_render .= '<table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Informacion</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>';
+                }
+                else{
+                    $form_render .= '<input type="hidden" name="id" id="id" value="'.$id_registro.'">';
+                    $form_render .= '<table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Descripcion</th>
+                                                <th>Ojo Derecho</th>
+                                                <th>Ojo Izquierdo</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>';
+                }
             }
 
             if ($formulario->id == 5 && $seccion->nombre != 'candidato') {
@@ -147,11 +158,11 @@ class RenderController extends Controller
                             $countCp = $countCp + 2;
                             break;
                         case 'number':
-                            if ($campos[$countCp]->titulo == 'Adicion') {
+                            if ($campos[$countCp]->nombre == 'r_adicion' || $campos[$countCp]->nombre == 'rf_adicion') {
                                 $form_render .= '<tr>
                                                     <td width="50%">'.$campos[$countCp]->titulo.'</td>
                                                     <td width="50%" colspan="2">
-                                                        <input type="number" maxlength="'.$campos[$countCp]->longitud.'" value="'.$valueOD.'" name="'.$campos[$countCp]->nombre.'" id="'.$campos[$countCp]->nombre.'" class="form-control '.$campos[$countCp]->class.'" placeholder="'.$campos[$countCp]->placeholder.'" '.$campos[$countCp]->attr.'>
+                                                        <input type="number" maxlength="'.$campos[$countCp]->longitud.'" value="'.$valueOD.'" name="'.$campos[$countCp]->nombre.'" id="'.$campos[$countCp]->nombre.'" class="form-control '.$campos[$countCp]->class.'" placeholder="'.$campos[$countCp]->placeholder.'" '.$campos[$countCp]->attr.' step="any">
                                                     </td>
                                                 </tr>';
                                 $countCp = $countCp + 1;
@@ -161,10 +172,10 @@ class RenderController extends Controller
                                 $form_render .= '<tr>
                                                     <td width="50%">'.$campos[$countCp]->titulo.'</td>
                                                     <td width="25%">
-                                                        <input type="number" maxlength="'.$campos[$countCp]->longitud.'" value="'.$valueOD.'" name="'.$campos[$countCp]->nombre.'" id="'.$campos[$countCp]->nombre.'" class="form-control '.$campos[$countCp]->class.'" placeholder="'.$campos[$countCp]->placeholder.'" '.$campos[$countCp]->attr.'>
+                                                        <input type="number" maxlength="'.$campos[$countCp]->longitud.'" value="'.$valueOD.'" name="'.$campos[$countCp]->nombre.'" id="'.$campos[$countCp]->nombre.'" class="form-control '.$campos[$countCp]->class.'" placeholder="'.$campos[$countCp]->placeholder.'" '.$campos[$countCp]->attr.' step="any">
                                                     </td>
                                                     <td width="25%">
-                                                        <input type="number" maxlength="'.$campos[$countCp+1]->longitud.'" value="'.$valueOI.'" name="'.$campos[$countCp+1]->nombre.'" id="'.$campos[$countCp+1]->nombre.'" class="form-control '.$campos[$countCp+1]->class.'" placeholder="'.$campos[$countCp+1]->placeholder.'" '.$campos[$countCp+1]->attr.'>
+                                                        <input type="number" maxlength="'.$campos[$countCp+1]->longitud.'" value="'.$valueOI.'" name="'.$campos[$countCp+1]->nombre.'" id="'.$campos[$countCp+1]->nombre.'" class="form-control '.$campos[$countCp+1]->class.'" placeholder="'.$campos[$countCp+1]->placeholder.'" '.$campos[$countCp+1]->attr.' step="any">
                                                     </td>
                                                 </tr>';
                                 $countCp = $countCp + 2;
@@ -181,8 +192,7 @@ class RenderController extends Controller
                                                 </tr>';
                             $countCp = $countCp + 1;
                             break;
-                        default:
-                            $countCp = $countCp + 1;
+                        default:                            $countCp = $countCp + 1;
                             break;
                     }
                 }
@@ -246,18 +256,41 @@ class RenderController extends Controller
                                                     </td>
                                                 </tr>';
                                 break;
+                                case 'select':
+                                    $form_render .= '<tr>
+                                                        <td width="60%">'.$campo->titulo.'</td>
+                                                        <td colspan="2">';
+                                                        $form_render .= '<select name="'.$campo->nombre.'" id="'.$campo->nombre.'" class="form-control '.$campo->class.'" '.$campo->attr.' style=" '.$obligatorio.'" '.$required.'>';
+                                                        $form_render .= '<option value="">Seleccione</option>';
+                                                        $opciones = explode(',', $campo->longitud);
+                                                        foreach ($opciones as $key => $opcion) {
+                                                            if ($value == $opcion) {
+                                                                $form_render .= '<option value="'.$opcion.'" selected>'.$opcion.'</option>';
+                                                            } else{
+                                                                $form_render .= '<option value="'.$opcion.'">'.$opcion.'</option>';
+                                                            }
+                                                        }
+                                                        $form_render .= '</select>';
+                                                        $form_render .= '</td>
+                                                                </tr>';
+                            break;
                             default:
                                 $form_render .= '--- Campo no Definido '.$campo->tipo.' '.$campo->nombre.'---';
                                 break;
                         }
                     } else {
                         if ($campo->tipo == 'readonly' || $campo->tipo == 'accordion') {
-                            $form_render .= '<div class="">';
+                            $form_render .= '<div class="'.$campo->nombre.'">';
                         } else {
-                            if ($campo->tipo == 'hidden') {
-                                $url = url($campo->nombre);
-                    	        $form_render .= '<div class="form-group '.$campo->nombre.'">
-                                            <a href="'.$url.'" data-toggle="modal" data-target="#moda_'.$campo->nombre.'"><label class="'.$campo->nombre.'"> '.$campo->titulo.'</label></a>';
+                           if ($campo->tipo == 'hidden') {
+                                $enfermedades = DB::select('select '.$campo->nombre.' from results where candidate_id = \''.$id_registro.'\'');
+                                $busqueda = $campo->nombre;
+                                $ojoPred = $enfermedades[0]->$busqueda;
+                                if(!empty($ojoPred)){
+                                    $url = url($campo->nombre);
+                                    $form_render .= '<div class="form-group '.$campo->nombre.'">
+                                    <a href="'.$url.'" data-toggle="modal" data-target="#moda_'.$campo->nombre.'"><label class="'.$campo->nombre.'"> '.$campo->titulo.' ('.$ojoPred.')</label></a>';
+                                }
                             } else {
                                 $form_render .= '<div class="form-group '.$campo->nombre.'">
                                             <label class="'.$campo->nombre.'">'.$campo->titulo.'</label>';
@@ -272,7 +305,7 @@ class RenderController extends Controller
                     			$form_render .= '<input type="email" maxlength="'.$campo->longitud.'" value="'.$value.'" name="'.$campo->nombre.'" id="'.$campo->nombre.'" class="form-control '.$campo->class.'" placeholder="'.$campo->placeholder.'" '.$campo->attr.' style="'.$obligatorio.'" '.$required.'>';
                     			break;
                     		case 'number':
-                    			$form_render .= '<input type="number" maxlength="'.$campo->longitud.'" value="'.$value.'" name="'.$campo->nombre.'" id="'.$campo->nombre.'" class="form-control '.$campo->class.'" placeholder="'.$campo->placeholder.'" '.$campo->attr.' style="'.$obligatorio.'" '.$required.'>';
+                    			$form_render .= '<input type="number" maxlength="'.$campo->longitud.'" value="'.$value.'" name="'.$campo->nombre.'" id="'.$campo->nombre.'" class="form-control '.$campo->class.'" placeholder="'.$campo->placeholder.'" '.$campo->attr.' style="'.$obligatorio.'" '.$required.' step="any">';
                     			break;
                     		case 'select':
         	            		$form_render .= '<select name="'.$campo->nombre.'" id="'.$campo->nombre.'" class="form-control '.$campo->class.'" '.$campo->attr.' style="'.$obligatorio.'" '.$required.'>';
@@ -283,7 +316,7 @@ class RenderController extends Controller
                                     $lista_op = DB::selectone('SELECT Consultas FROM campaigns WHERE id = \''.$idCampaign->campaign_id.'\'');
                                     $list_opc = explode(",", $lista_op->Consultas);
                                     foreach ($list_opc as $opcion) {
-                                      if ($value == $opcion) {
+                                        if ($value == $opcion) {
                                             $form_render .= '<option value="'.$opcion.'" selected>'.$opcion.'</option>';
                                         } else {
                                             $form_render .= '<option value="'.$opcion.'">'.$opcion.'</option>';
@@ -323,8 +356,9 @@ class RenderController extends Controller
                                 $opciones = explode(',', $campo->longitud);
                                     $form_render .= '<br>';
                                 foreach ($opciones as $key => $opcion) {
+                                    $checked = ($value == 'Si') ? 'checked' : '' ;
                                     $form_render .= '<label class="checkbox-inline">
-                                                        <input type="checkbox" name="'.$campo->nombre.'" id="'.$campo->nombre.'" class="'.$campo->class.'" '.$campo->attr.' value="Si" style="'.$obligatorio.'" '.$required.'> '.$opcion.'
+                                                        <input type="checkbox" name="'.$campo->nombre.'" id="'.$campo->nombre.'" class="'.$campo->class.'" '.$campo->attr.' value="Si" style="'.$obligatorio.'" '.$required.' '.$checked.'> '.$opcion.'
                                                     </label>';
                                 }
                                 break;
@@ -353,31 +387,32 @@ class RenderController extends Controller
                             case 'readonly':
                                 $form_render .= '<label class="col-sm-3 control-label">'.$campo->titulo.'</label>
                                                     <div class="col-sm-9">
-                                                      <p class="form-control-static">'.$value.'</p>
+                                                      <p class="form-control-static" id="'.$campo->nombre.'">'.$value.'</p>
                                                     </div>';
                                 break;
                             case 'accordion':
 
-                                $values = DB::select('select nombres,apellidos, telefono_celular, correo_electronico from candidates where id = ?', [$id_registro]);
+                                $values = DB::select('select codigo, nombres, apellidos, telefono_celular, correo_electronico from candidates where id = '.$id_registro);
 
                                 $form_render .= '
                                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                                           <div class="panel panel-default">
                                             <div class="panel-heading" role="tab" id="headingOne">
                                               <h4 class="panel-title">
-                                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                                                   '.$campo->titulo.'
                                                 </a>
                                               </h4>
                                             </div>
                                             <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                                               <div class="panel-body">
-                                                    <strong>Nombre: </strong> '.$values[0]->nombres.'<br>
-                                                    <strong>Apellidos: </strong> '.$values[0]->apellidos.'<br>
-                                                    <strong>Telefono: </strong> '.$values[0]->telefono_celular.'<br>
-                                                    <strong>Correo Electronico: </strong> '.$values[0]->correo_electronico.'<br>
-                                                    <iframe src="https://app.acuityscheduling.com/schedule.php?owner=12651758" width="100%" height="800" frameBorder="0"></iframe>
-                                                    <script src="https://d3gxy7nm8y4yjr.cloudfront.net/js/embed.js" type="text/javascript"></script>
+                                                <diV>
+                                                    <p>Nombre: '.$values[0]->nombres.' '.$values[0]->apellidos.'</p>
+                                                    <p>Celular: '.$values[0]->telefono_celular.'</p>
+                                                    <p>Celular: '.$values[0]->correo_electronico.'</p>
+                                                </div>
+                                                <iframe src="https://app.acuityscheduling.com/schedule.php?owner=12651758&firstName='.$values[0]->nombres.'&lastName='.$values[0]->apellidos.'&phone='.$values[0]->telefono_celular.'&email='.$values[0]->correo_electronico.'&field:2012785=Sistema Campañas&field:1985156='.$values[0]->codigo.'" width="100%" height="800" frameBorder="0"></iframe>
+                                                <script src="https://d3gxy7nm8y4yjr.cloudfront.net/js/embed.js" type="text/javascript"></script>
                                               </div>
                                             </div>
                                           </div>

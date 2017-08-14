@@ -28,9 +28,14 @@
 			$('.pterigion').hide();
 		}
 
-		if ($('#catarata').val() == 'No') {
-			$('#catarata').hide();
-			$('.catarata').hide();
+		if ($('#catarata_incipiente').val() == 'No') {
+			$('#catarata_incipiente').hide();
+			$('.catarata_incipiente').hide();
+		}
+
+		if ($('#catarata_avanzada').val() == 'No') {
+			$('#catarata_avanzada').hide();
+			$('.catarata_avanzada').hide();
 		}
 
 		if ($('#glaucoma').val() == 'No') {

@@ -100,7 +100,7 @@
 				}
 			});
 		// Vitreo
-			if ($('#OD_vitreo_no_valorable').prop('checked')) {
+			if ($('#OD_vitreo_transparente').prop('checked')) {
 				$('.OD_vitreo').attr({
 					disabled: true,
 					checked: false
@@ -109,7 +109,7 @@
 				$('.OD_vitreo').removeAttr('disabled');
 			}
 
-			if ($('#OI_vitreo_no_valorable').prop('checked')) {
+			if ($('#OI_vitreo_transparente').prop('checked')) {
 				$('.OI_vitreo').attr({
 					disabled: true,
 					checked: false
@@ -118,7 +118,7 @@
 				$('.OI_vitreo').removeAttr('disabled');
 			}
 
-			$('#OD_vitreo_no_valorable').change(function(event) {
+			$('#OD_vitreo_transparente').change(function(event) {
 				if ($(this).prop('checked')) {
 					$('.OD_vitreo').attr({
 						disabled: true,
@@ -129,7 +129,7 @@
 				}
 			});
 
-			$('#OI_vitreo_no_valorable').change(function(event) {
+			$('#OI_vitreo_transparente').change(function(event) {
 				if ($(this).prop('checked')) {
 					$('.OI_vitreo').attr({
 						disabled: true,

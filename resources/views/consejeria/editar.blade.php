@@ -29,9 +29,14 @@
 				$('.pterigion').hide();
 			}
 
-			if ($('#catarata').val() == 'No') {
-				$('#catarata').hide();
-				$('.catarata').hide();
+			if ($('#catarata_avanzada').val() == 'No') {
+				$('#catarata_avanzada').hide();
+				$('.catarata_avanzada').hide();
+			}
+
+			if ($('#catarata_incipiente').val() == 'No') {
+				$('#catarata_incipiente').hide();
+				$('.catarata_incipiente').hide();
 			}
 
 			if ($('#glaucoma').val() == 'No') {
@@ -58,40 +63,13 @@
 				$('#revision_integral').hide();
 				$('.revision_integral').hide();
 			}
-		// Resultados de prediagnostico >>>
-			// alert($('#owner',$('#appointment-form')).val());
-
-			// $("#appointment-form").children("input").each(function(){
-			// 	alert($(this).attr("id") + " has a value of " + $(this).val());
-			// });
-
-			// $( "#appointment-form" ).submit(function( event ) {
-			//   alert( "Handler for .submit() called." );
-			//   event.preventDefault();
-			// });
-
-			$("input").click(function(){
-        //alert("The paragraph was clicked.");
-    });
-
-
-		// $('#first-name',$('#appointment-form')).onclick(function() {
-		// 	alert($(this).val());
-		// });
-		// $('#first-name', $('#appointment-form') ).val('Hola mundo');
-
-		// $("#appointment-form :input[name='firstName']").val('hola mundo');
-		// var allinputs = $("#appointment-form :input");
-		// var formClidren = $('#appointment-form > *');
-		// alert(allinputs.length);
 	});
 </script>
 <div class="container-fluid">
 {!!Form::model($candidate, array('route' => array('consejeria.update', $candidate->id),'method'=>'PUT','files'=>true))!!}
 	{!!$form_render!!}
 {!! Form::submit('Termina Proceso',['class'=>'btn btn-primary']) !!}
-{!! link_to_route('consejeria.show', $title = 'Comprobante', $parameters = $candidate->id, $attributes = array('class'=>'btn btn-primary','title'=>'codigo')) !!}
-<!-- <input type="button" class="btn btn-primary" value="Comprobante" onclick="window.location.href = '../../../../phpDocs/ticket.php'" /> -->
+{!! Form::submit('Comprobante',['class'=>'btn btn-primary', 'name'=>'comprobante']) !!}
 {!! Form::close() !!}
 </div>
 @endsection

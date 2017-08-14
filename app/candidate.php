@@ -54,6 +54,8 @@ class candidate extends Model
 		'fecha_cita',
 		'tipo_consulta',
 		'hora_consulta',
+		'pre_diagnostico',
+		'ojo_prediag',
     ];
 
     public function user()

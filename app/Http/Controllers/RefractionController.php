@@ -125,7 +125,7 @@ class RefractionController extends Controller
             $refraction->od_rf_distancia_nasopupilar = $request->od_rf_distancia_nasopupilar;
             $refraction->oi_rf_distancia_nasopupilar = $request->oi_rf_distancia_nasopupilar;
             $refraction->rf_adicion                  = $request->rf_adicion;
-            // $refraction->optometrista_responsable    = $request->optometrista_responsable;
+            $refraction->optometrista_responsable    = $request->optometrista_responsable;
         $refraction->save();
 
         $candidate = candidate::find($id);

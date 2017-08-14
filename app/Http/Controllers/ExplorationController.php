@@ -107,45 +107,145 @@ class ExplorationController extends Controller
             $exploration->papila_neovasos                       = $request->papila_neovasos;
             $exploration->papila_vasos_bayoneta                 = $request->papila_vasos_bayoneta;
             $exploration->papila_hemorragia_astila              = $request->papila_hemorragia_astila;
+            $exploration->presion_intraocular                   = $request->presion_intraocular;
+            $exploration->glucosa_capilar                       = $request->glucosa_capilar;
+            $exploration->presion_arterial                      = $request->presion_arterial;
+            $exploration->presion_estado_medicion               = $request->presion_estado_medicion;
             $exploration->papila_otros                          = $request->papila_otros;
             $exploration->prediagnostico                        = 'Si';
         $exploration->save();
 
         // <<< Reglas impresion de prediagnostico
 
-            $retinopatia_diabetica    = (strlen($request->retina_microaneurismas) >= 2 ||
-                                         strlen($request->retina_exudados) >= 2 ||
-                                         strlen($request->retina_exudados_duros) >= 2 ||
-                                         strlen($request->retina_neovasos) >= 2 ||
-                                         strlen($request->retina_hemorragias) >= 2) ? 'Si' : 'No' ;
+             $retinopatia_diabetica = '';
+            if (strpos($request->retina_microaneurismas,'OI') == 0 ||
+               strpos($request->retina_exudados,'OI') == 0 ||
+               strpos($request->retina_exudados_duros,'OI') == 0 ||
+               strpos($request->retina_neovasos,'OI') == 0 ||
+               strpos($request->retina_hemorragias,'OI') == 0) {
+                $retinopatia_diabetica .= 'OD';
+            }
+            if(strpos($request->retina_microaneurismas,'OI') ||
+               strpos($request->retina_exudados,'OI') ||
+               strpos($request->retina_exudados_duros,'OI') ||
+               strpos($request->retina_neovasos,'OI') ||
+               strpos($request->retina_hemorragias,'OI')){
+                $retinopatia_diabetica .= 'OI';
+            }
+            if(strlen($retinopatia_diabetica)>3){
+                $retinopatia_diabetica = 'AO';
+            }
+            
+            $retinopatia_hipertensiva = '';
+            if(strpos($request->retina_cruce_av_sospechoso,'OD') == 0 ||
+               strpos($request->retina_tortosidad_venosa,'OD') == 0 ||
+               strpos($request->retina_hemorragias,'OD') == 0){
+                $retinopatia_hipertensiva .= 'OD';
+            }
+            if(strpos($request->retina_cruce_av_sospechoso,'OI') ||
+               strpos($request->retina_tortosidad_venosa,'OI') ||
+               strpos($request->retina_hemorragias,'OI')){
+                $retinopatia_hipertensiva .= 'OI';
+            }
+            if(strlen($retinopatia_hipertensiva)>3){
+                $retinopatia_hipertensiva = 'AO';
+            }
+            
+            $maculopatia = '';
+             if(strpos($request->macula_edema,'OD') == 0||
+               strpos($request->macula_drusas,'OD') == 0||
+               strpos($request->macula_desprendimiento,'OD') == 0 ||
+               strpos($request->macula_exudados,'OD') == 0){
+                $maculopatia .= 'OD';
+            }
+            if(strpos($request->macula_edema,'OI') ||
+               strpos($request->macula_drusas,'OI') ||
+               strpos($request->macula_desprendimiento,'OI') ||
+               strpos($request->macula_exudados,'OI')){
+                $maculopatia .= 'OI';
+            }
+            if(strlen($maculopatia)>3){
+                $maculopatia = 'AO';
+            }
 
-            $retinopatia_hipertensiva = (strlen($request->retina_cruce_av_sospechoso) >= 2 ||
-                                         strlen($request->retina_tortosidad_venosa) >= 2 ||
-                                         strlen($request->retina_hemorragias) >= 2) ? 'Si' : 'No' ;
+            $glaucoma = '';
+            if(strpos($request->papila_excavacion_sospechosa,'OD') == 0 ||
+               strpos($request->papila_neovasos,'OD') == 0 ||
+               strpos($request->papila_vasos_bayoneta,'OD') == 0 ||
+               strpos($request->papila_hemorragia_astila,'OD') == 0){
+                $glaucoma .= 'OD';
+            }
+            if(strpos($request->papila_excavacion_sospechosa,'OI') ||
+               strpos($request->papila_neovasos,'OI') ||
+               strpos($request->papila_vasos_bayoneta,'OI') ||
+               strpos($request->papila_hemorragia_astila,'OI')){
+                $glaucoma .= 'OI';
+            }
+            if(strlen($glaucoma)>3){
+                $glaucoma = 'AO';
+            }
+            
+            $pterigion = '';
+            if(strpos($request->papila_neovasos,'OD') == 0){
+                $pterigion .= 'OD';
+            }
+            if(strpos($request->papila_neovasos,'OI')){
+                $pterigion .= 'OI';
+            }
+            if(strlen($pterigion)>3){
+                $pterigion = 'AO';
+            }
 
-            $maculopatia              = (strlen($request->macula_edema) >= 2 ||
-                                         strlen($request->macula_drusas) >= 2 ||
-                                         strlen($request->macula_desprendimiento) >= 2 ||
-                                         strlen($request->macula_exudados) >= 2) ? 'Si' : 'No';
+            $catarata_incipiente = '';
+            if(strpos($request->segmento_anterior_catarata_incipiente,'OD') == 0){
+                $catarata_incipiente .= 'OD';
+            }
+            if(strpos($request->segmento_anterior_catarata_incipiente,'OI')){
+                $catarata_incipiente .= 'OI';
+            }
+            if(strlen($catarata_incipiente)>3){
+                $catarata_incipiente = 'AO';
+            }
 
-            $glaucoma                 = (strlen($request->papila_excavacion_sospechosa) >= 2 ||
-                                         strlen($request->papila_neovasos) >= 2 ||
-                                         strlen($request->papila_vasos_bayoneta) >= 2 ||
-                                         strlen($request->papila_hemorragia_astila) >= 2) ? 'Si' : 'No' ;
+            $catarata_avanzada = '';
+            if(strpos($request->segmento_anterior_catarata_avanzada,'OD') == 0){
+                $catarata_avanzada .= 'OD';
+            }
+            if(strpos($request->segmento_anterior_catarata_avanzada,'OI')){
+                $catarata_avanzada .= 'OI';
+            }
+            if(strlen($catarata_avanzada)>3){
+                $catarata_avanzada = 'AO';
+            }
 
-            $pterigion                = (strlen($request->segmento_anterior_pterigion) >= 2) ? 'Si' : 'No' ;
+            $conjuntivitis = '';
+            if(strpos($request->segmento_anterior_quemosis,'OD') == 0 ||
+               strpos($request->segmento_anterior_secrecion,'OD') == 0 ||
+               strpos($request->segmento_anterior_hiperemia,'OD') == 0){
+                $conjuntivitis .= 'OD';
+            }
+            if(strpos($request->segmento_anterior_quemosis,'OI') ||
+               strpos($request->segmento_anterior_secrecion,'OI') ||
+               strpos($request->segmento_anterior_hiperemia,'OI')){
+                $conjuntivitis .= 'OI';
+             }
+             if(strlen($conjuntivitis)>3){
+                $conjuntivitis = 'AO';
+            }
 
-            $catarata_incipiente      = (strlen($request->segmento_anterior_catarata_incipiente) >= 2) ? 'Si' : 'No' ;
-
-            $catarata_avanzada        = (strlen($request->segmento_anterior_catarata_avanzada) >= 2) ? 'Si' : 'No' ;
-
-            $conjuntivitis            = (strlen($request->segmento_anterior_quemosis) >= 2 ||
-                                         strlen($request->segmento_anterior_secrecion) >= 2 ||
-                                         strlen($request->segmento_anterior_hiperemia) >= 2) ? 'Si' : 'No' ;
-
-            $oculoplastica            = (strlen($request->parpados_posicion) >= 2 ||
-                                         strlen($request->parpados_ptosis) >= 2) ? 'Si' : 'No';
-
+            $oculoplastica = '';
+            if(strpos($request->parpados_posicion,'OD') == 0 ||
+               strpos($request->parpados_ptosis,'OD') == 0){
+                $oculoplastica = 'OD';
+            }
+            if(strpos($request->parpados_posicion,'ID') ||
+               strpos($request->parpados_ptosis,'ID')){
+                $oculoplastica = 'OI';
+            }
+            if(strlen($oculoplastica)>3){
+                $oculoplastica = 'AO';
+            }
+            
             $arrayResults = array(  $retinopatia_diabetica,
                                     $retinopatia_hipertensiva,
                                     $maculopatia,
@@ -224,6 +324,7 @@ class ExplorationController extends Controller
     {
         $candidate = candidate::find($id);
             $candidate->pre_diagnostico = $request->pre_diagnostico;
+            $candidate->ojo_prediag     = $request->ojo_prediag;
             $candidate->etapa           = $request->etapa;
         $candidate->save();
         Session::flash('message','El Candidato "'.$candidate->nombres.' '.$candidate->apellidos.'" se ha enviado a "'.$request->etapa.'"');

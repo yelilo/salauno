@@ -47,5 +47,5 @@
 	});
 </script>
 			{{-- {{$form_render}} --}}
-	{!!$form_render!!}
+
 	{!! Form::submit('Guardar',['class'=>'btn btn-primary']) !!}

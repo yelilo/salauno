@@ -8,7 +8,7 @@
       <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingOne">
           <h4 class="panel-title">
-            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
               Resultados Generales
             </a>
           </h4>
@@ -23,13 +23,25 @@
                   <th>Masculino</th>
                   <th>Otro</th>
                 </tr>
-              </thead>
-              <tbody>
                 <tr>
                   <td>{!!$total_candidatos!!}</td>
                   <td>{!!$total_femenino!!}</td>
                   <td>{!!$total_masculino!!}</td>
                   <td>{!!$total_otro!!}</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>Numero de Citas</th>
+                  <th>Diabetes</th>
+                  <th>Hiertension</th>
+                  <th>Diabetes + Hipertension</th>
+                </tr>
+                <tr>
+                  <td>{!!$total_citas!!}</td>
+                  <td>{!!$total_diabetes!!}</td>
+                  <td>{!!$total_hipertension!!}</td>
+                  <td>{!!$total_diabetes_hipertension!!}</td>
                 </tr>
               </tbody>
             </table>
@@ -48,34 +60,60 @@
           <div class="panel-body">
             <table class="table">
               <tr>
+                <th>Catarata incipiente</th>
+                <th>Catarata pb quirurgica</th>
+                <th>Conjuntivitis</th>
+                <th>Excavacion Sospechosa</th>
+                <th>Fondo coroideo / Adelgazamiento retina</th>
+              </tr>
+              <tr>
+                <td>{!!$total_catarata_incipiente!!}</td>
+                <td>{!!$total_catarata_quirurgica!!}</td>
+                <td>{!!$total_conjuntivitis!!}</td>
+                <td>{!!$total_excavacion_sospechosa!!}</td>
+                <td>{!!$total_fondo_coroideo!!}</td>
+              </tr>
+              <tr>
+                <th>Maculopatia</th>
+                <th>No valorable</th>
+                <th>Oculoplastica</th>
+                <th>Ojo seco</th>
+                <th>Otro</th>
+              </tr>
+              <tr>
+                <td>{!!$total_maculopatia!!}</td>
+                <td>{!!$total_no_valorable!!}</td>
+                <td>{!!$total_oculoplastica!!}</td>
+                <td>{!!$total_ojo_seco!!}</td>
+                <td>{!!$total_otro!!}</td>
+              </tr>
+              <tr>
+                <th>Pterigion</th>
+                <th>Queratocono</th>
+                <th>Refractivo</th>
                 <th>Retinopatia Diabetica</th>
                 <th>Retinopatia Hipertensiva</th>
-                <th>Maculopatia</th>
-                <th>Refractivo</th>
-                <th colspan="2">Pterigion</th>
               </tr>
               <tr>
-                <td>{!!$total_retinopatia_dia!!}</td>
-                <td>{!!$total_retinopatia_hip!!}</td>
-                <td>{!!$total_maculopatia!!}</td>
+                <td>{!!$total_pterigion!!}</td>
+                <td>{!!$total_queratocono!!}</td>
                 <td>{!!$total_refractivo!!}</td>
-                <td colspan="2">{!!$total_pterigion!!}</td>
+                <td>{!!$total_retinopatia_diabetica!!}</td>
+                <td>{!!$total_retinopatia_hipertensiva!!}</td>
               </tr>
               <tr>
-                <th>Glaucoma</th>
-                <th>Catarata</th>
-                <th>Conjuntivitis</th>
-                <th>Oculoplastica</th>
-                <th>Iridopatia</th>
                 <th>Revision Integral</th>
+                <th>Sano</th>
+                <th>Sin Hallazgo</th>
+                <th>Sin Pre-diagnostico</th>
+                <th>Valoracion cirugia refractiva</th>
               </tr>
-               <tr>
-                <td>{!!$total_exc_sosp!!}</td>
-                <td>{!!$total_catarata!!}</td>
-                <td>{!!$total_conjuntivitis!!}</td>
-                <td>{!!$total_oculoplastica!!}</td>
-                <td>{!!$total_iridopatia!!}</td>
-                <td>{!!$total_rev_integral!!}</td>
+              <tr>
+                <td>{!!$total_revision!!}</td>
+                <td>{!!$total_sano!!}</td>
+                <td>{!!$total_sin_hallazgo!!}</td>
+                <td>{!!$total_sin_prediagnostico!!}</td>
+                <td>{!!$total_valoracion_lasik!!}</td>
               </tr>
             </table>
           </div>
@@ -105,7 +143,7 @@
               </tbody>
               @endforeach
             </table>
-            {!!$candidates->render()!!}
+            {{-- {!!$candidates->render()!!} --}}
           </div>
         </div>
       </div>

@@ -25,6 +25,24 @@
     {!! HTML::script('js/jquery.min.js') !!}
     {!! Html::script('js/bootstrap.min.js') !!}
     {!! Html::script('js/jquery-2.2.3.min.js') !!}
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            var href = $(location).attr('href');
+             var url = $(this).attr('title');
+             $('#this_title').html('<strong>' + href + '</strong>');
+             $('#this_url').html('<strong>' + url + '</strong>');
+
+             $('#btnCargar').on('click', function () {
+                // alert('hola');
+                $(this).attr('disabled', true);
+                $(this).text('Espere...');
+                // var $btn = $('#btnCargar').button('loading');
+                // // business logic...
+                // $btn.button('reset');
+              })
+             // alert(href);
+        });
+    </script>
 </head>
 <body id="app-layout">
     <div id="wrap">
@@ -53,15 +71,15 @@
                         <li><a href="{{ url('/home') }}">Inicio</a></li>
                     @else
                         <li><a href="{{ url('/candidate/create') }}">1. Registro</a></li>
-                        <li><a href="{{ url('/candidate') }}">2. Tamizaje</a></li>
-                        <li><a href="{{ url('/exploration') }}">3. Exploración</a></li>
-                        <li><a href="{{ url('/refraction') }}">4. Optica</a></li>
-                        <li><a href="{{ url('/consejeria') }}">5. Consejeria</a></li>
+                        {{-- <li><a href="{{ url('/candidate') }}">2. Tamizaje</a></li> --}}
+                        <li><a href="{{ url('/exploration') }}">2. Exploración</a></li>
+                        <li><a href="{{ url('/refraction') }}">3. Optica</a></li>
+                        <li><a href="{{ url('/consejeria') }}">4. Consejeria</a></li>
                         @if (Auth::user()->id <= 3 )
                             <li><a href="{{ url('/campaign') }}">Campañas</a></li>
                             <li><a href="{{ url('/seguimiento') }}">Seguimiento</a></li>
                             {{-- <li><a href="{{ url('/configuracion') }}">Configuracion</a></li> --}}
-                            {{--<li><a href="{{ url('/configuracion') }}">Configuracion</a></li>--}}
+                            {{-- <li><a href="{{ url('/configuracion') }}">Configuracion</a></li> --}}
                         @endif
                     @endif
                         </ul>
@@ -111,7 +129,7 @@
                         @endif
 
                         @if(Session::has('message-info'))
-                            <div class="alert alert-success" role="alert">
+                            <div class="alert alert-warning" role="alert">
                               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                               {{Session::get('message-info')}}
                             </div>
@@ -251,5 +269,6 @@
           </div>
         </div>
     {{-- modal enfermedades --}}
+    <div style="text-align:right; color:#CCCCCC;">salauno v1.3 - 11/2016</div>
 </body>
 </html>

@@ -71,27 +71,6 @@ class CandidateController extends Controller
     // public function store(CandidateRequest $request)
     public function store(Request $request)
     {
-
-        // $validator = Validator::make($request->all(), [
-        //     'nombres' => 'required|max:255',
-        //     'apellidos' => 'required',
-        // ]);
-
-        // $validator = CandidateRequest::make();
-
-        // if ($validator->fails()) {
-        //     // return redirect('candidate/create')
-        //     //             ->withErrors($validator)
-        //     //             ->withInput();
-        //     // return back()
-        //     //         ->withErrors($validator)
-        //     //         ->withInput();
-        //     return redirect()
-        //             ->route('candidate.create', [$request])
-        //             ->withErrors($validator);
-        //     // return redirect('candidate/create')->with('nombres', 'Profile updated!');
-        // }
-
         $campaign      = campaign::where('activo','Si')->first();
         $arrayCampania = explode('-',$campaign->codigo);
         $ultimo_codigo = candidate::where('campaign_id','=',$campaign->id)->max('codigo');
@@ -103,6 +82,18 @@ class CandidateController extends Controller
             $next_codigo   = number_format($arrayCodigo[2]) + 1;
             $next_codigo   = str_pad((int) $next_codigo,3,"0",STR_PAD_LEFT);
         }
+
+        // <<< valida que no exista candidato
+            $resCandidate = candidate::where('nombres','=',$request->nombres)
+                                        ->where('apellidos','=',$request->apellidos)
+                                        ->where('fecha_nacimiento','=',$request->fecha_nacimiento)
+                                        ->first();
+            if (!empty($resCandidate)) {
+                Session::flash('message-info','Este Registro ya esta duplicado y se encuentra en la etapa "'.$resCandidate->etapa.'"');
+                return Redirect::to('candidate/create');
+            }
+
+        // valida que no exista candidato >>>
 
         $edad = $this->calculaEdad($request->fecha_nacimiento);
 
@@ -134,12 +125,14 @@ class CandidateController extends Controller
             'familiar_glaucoma'         => $request->familiar_glaucoma,
             'enfermedad_tiroides'       => $request->enfermedad_tiroides,
             'disminucion_vista'         => $request->disminucion_vista,
+            'consulta_oftalmologo'      => $request->consulta_oftalmologo,
             'examen_visual'             => $request->examen_visual,
             'cirugia_ojo'               => $request->cirugia_ojo,
             'cirugia_ojo_cual'          => $request->cirugia_ojo_cual,
-            'motivo_etapa'          => $request->motivo_etapa,
-            'etapa'                     => 'Revision',
+            'motivo_etapa'              => $request->motivo_etapa,
+            'etapa'                     => $request->etapa,
             ]);
+        // die($request->telefono_fijo);
 
         //<<< Agrega al candidato a las demas estaciones
             // <<< Exploracion
@@ -156,9 +149,8 @@ class CandidateController extends Controller
             // Exploracion >>>
         //Agrega al candidato a las demas estaciones >>>
 
-        Session::flash('message',' El Registro se ha enviado a Tamizaje');
+        Session::flash('message',' El Registro se ha enviado a '.$request->etapa);
         return Redirect::to('candidate/create');
-        // return redirect('form')->withInput($request->flash());
     }
 
     /**

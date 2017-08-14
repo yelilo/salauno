@@ -11,7 +11,7 @@ use Redirect;
 
 class ConfiguracionController extends Controller
 {
-    public function CreaTokent()
+    private function CreaTokent()
     {
         $conf = DB::table('configurations')->where('activo','Si')->first();
 
@@ -24,7 +24,7 @@ class ConfiguracionController extends Controller
               CURLOPT_RETURNTRANSFER => true,
               CURLOPT_ENCODING => "",
               CURLOPT_MAXREDIRS => 10,
-              CURLOPT_TIMEOUT => 30,
+              CURLOPT_TIMEOUT => 600,
               CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
               CURLOPT_CUSTOMREQUEST => "POST",
               CURLOPT_POSTFIELDS => $credenciales,
@@ -47,33 +47,35 @@ class ConfiguracionController extends Controller
         }
     }
 
-
-    public function show($opciones){
-      return view('configuracion/agregar',['opciones'=>$opciones]);
-    }
-
-    public function modify(Request $request){
-      $nombre = $request->Nuevo;
-      echo($nombre);
-    }
-
-    public function index(){
-      $opciones = DB::select('SELECT * FROM tipo_consultas');
-      return view('configuracion/index',['opciones'=>$opciones]);
-    }
-
     public function sincCandidato($objJson)
     {
         $token = $this->CreaTokent();
+        $resCandidato = $this->searchLead($objJson,$token);
+
+        $rs = json_decode(json_encode($resCandidato),true);
+        $rs = json_decode($rs, true);
+
+
+        if (!empty($rs['records'])) {
+          // echo "llena";
+          $id_lead = $rs['records'][0]['Id'];
+        } else {
+          $id_lead = '';
+          // echo "vacia";
+        }
+
+        $_url = ($id_lead == '') ? 'https://na30.salesforce.com/services/data/v37.0/sobjects/Lead' : 'https://na30.salesforce.com/services/data/v37.0/sobjects/Lead/'.$id_lead.'?_HttpMethod=PATCH' ;
+
+        // echo $_url;
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt_array($curl, array(
-          CURLOPT_URL => "https://na30.salesforce.com/services/data/v37.0/sobjects/Lead",
+          CURLOPT_URL => $_url,
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",
           CURLOPT_MAXREDIRS => 10,
-          CURLOPT_TIMEOUT => 30,
+          CURLOPT_TIMEOUT => 600,
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => "POST",
           CURLOPT_POSTFIELDS => $objJson,
@@ -86,6 +88,7 @@ class ConfiguracionController extends Controller
         ));
 
         $response = curl_exec($curl);
+
         $err = curl_error($curl);
 
         curl_close($curl);
@@ -93,7 +96,65 @@ class ConfiguracionController extends Controller
         if ($err) {
           return "cURL Error #:" . $err;
         } else {
+          $response = ($id_lead != '') ? json_encode(array('id' => $id_lead)) : $response ;
           return $response;
         }
+    }
+
+    function convert_object_to_array($data) {
+
+        if (is_object($data)) {
+            $data = get_object_vars($data);
+        }
+
+        if (is_array($data)) {
+            return array_map(__FUNCTION__, $data);
+        }
+        else {
+            return $data;
+        }
+    }
+
+    private function searchLead($objJson, $token)
+    {
+
+      $arrayOj = json_decode($objJson);
+
+      $FirstName       = str_replace(' ', '%20', $arrayOj->FirstName);
+      $LastName        = str_replace(' ', '%20', $arrayOj->LastName);
+      $MobilePhone     = $arrayOj->MobilePhone;
+      $Email           = str_replace('@', '%40', $arrayOj->Email);
+      $ID_Candidato__c = $arrayOj->ID_Candidato__c;
+
+      $_url = "https://na30.salesforce.com/services/data/v20.0/query/?q=SELECT%20Id%20FROM%20Lead%20WHERE%20FirstName%20%3D%20'".$FirstName."'%20AND%20LastName%20%3D%20'".$LastName."'%20AND%20Phone%20%3D%20'".$MobilePhone."'%20AND%20Email%20%3D%20'".$Email."'";
+
+      $curl = curl_init();
+
+      curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+      curl_setopt_array($curl, array(
+        CURLOPT_URL => $_url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 600,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_HTTPHEADER => array(
+          "authorization: Bearer ".$token,
+          "cache-control: no-cache",
+          "content-type: application/json",
+        ),
+      ));
+
+      $response = curl_exec($curl);
+      $err = curl_error($curl);
+
+      curl_close($curl);
+
+      if ($err) {
+        return "cURL Error #:" . $err;
+      } else {
+        return $response;
+      }
     }
 }

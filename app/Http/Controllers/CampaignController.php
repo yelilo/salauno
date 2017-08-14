@@ -25,7 +25,8 @@ class CampaignController extends Controller
     public function index()
     {
         // Listado de campañas
-        $campaigns = campaign::paginate(15);
+        $campaigns = campaign::orderby('created_at','DESC')
+                     ->paginate(15);
         return view('campaign/index',['campaigns'=>$campaigns]);
     }
 
@@ -76,7 +77,6 @@ class CampaignController extends Controller
                 $campaign->promocion          = $request->promocion;
                 $campaign->status             = $request->status;
                 $campaign->activo             = $activo;
-                $campaign->Consultas          = $request->consultas;
             $campaign->save();
 
             Session::flash('message-info','Campaña creada corecctamente');
@@ -94,8 +94,9 @@ class CampaignController extends Controller
      */
     public function show($id)
     {
-        $respuesta = $this->enviarRegistros($id);
-        Session::flash('message-info',$respuesta);
+        $arrayRes = $this->enviarRegistros($id);
+        echo var_dump($arrayRes);
+        Session::flash('message-info',$arrayRes['respuesta']);
         return Redirect::to('campaign');
     }
 
@@ -104,19 +105,27 @@ class CampaignController extends Controller
         $campaign    = campaign::find($id);
         $count_ok    = 0;
         $count_error = 0;
+        $results     = '';
 
         $candidates = DB::table('candidates')
                     ->join('campaigns', 'campaigns.id', '=', 'candidates.campaign_id')
                     ->where('candidates.campaign_id','=',$campaign->id)
                     ->where('candidates.etapa','<>','Enviado a SF')
-                    ->select('candidates.*', 'campaigns.codigo')
+                    ->select('candidates.*', 'campaigns.codigo AS codigocp')
                     ->get();
+                    // ->where('candidates.etapa','<>','Duplicado a SF')
 
         $acc = new ConfiguracionController;
 
         foreach ($candidates as $key => $candidate) {
+            if ($results != '') {
+                break;
+            }
+                // 'CreatedById'                         => '00536000000uxPYAAY',
             $arrayCandidate = array(
-                'Campana__c'                            => $candidate->codigo,
+                'OwnerId'                             => '00536000000uxPYAAY',
+                'Campana__c'                          => $candidate->codigocp,
+                'ID_Candidato__c'                     => $candidate->codigo,
                 'FirstName'                           => $candidate->nombres,
                 'LastName'                            => $candidate->apellidos,
                 'Sexo__c'                             => $candidate->genero,
@@ -142,29 +151,54 @@ class CampaignController extends Controller
                 'Cirugia_de_ojo__c'                   => $candidate->cirugia_ojo,
                 'Cirugia_Ojo_Cual__c'                 => $candidate->cirugia_ojo_cual,
                 'Status'                              => $candidate->status,
+                'Clinica__c'                          => $candidate->clinica,
                 'Fecha_de_cita__c'                    => $candidate->fecha_cita,
                 'Pre_Diagnostico__c'                  => $candidate->pre_diagnostico
             );
 
             $jsonCandidate = json_encode($arrayCandidate);
-            $respuesta = $acc->sincCandidato($jsonCandidate);
-            // echo "<p>";
-            // echo $respuesta;
-            // echo "</p>";
-            if ($respuesta != 'error') {
+            $respuesta     = $acc->sincCandidato($jsonCandidate);
+            $respuesta     = json_decode($respuesta, true);
+
+            echo "<pre>";
+            echo var_dump($respuesta);
+
+            if (array_key_exists('id', $respuesta)) {
                 $count_ok++;
+                $salesforce_id = $respuesta['id'];
                 candidate::where('id', $candidate->id)
-                              ->update(['etapa' => 'Enviado a SF']);
+                            ->update(['etapa' => 'Enviado a SF','salesforce_id' => $salesforce_id]);
+
+            } elseif (array_key_exists('message', $respuesta[0])) {
+
+                $count_error++;
+                $pos = strpos($respuesta[0]['message'], 'candidatoCampana');
+                if ($pos !== false) {
+                    $results = "Verifique que la campaña este creada en Salesforce para poder subir los candidatos.";
+                } else {
+                    $results .= $candidate->codigo." - ".$respuesta[0]['message'];
+                    candidate::where('id', $candidate->id)
+                            ->update(['etapa' => 'Duplicado en SF']);
+                }
+
             } else {
+
                 $count_error++;
                 candidate::where('id', $candidate->id)
                               ->update(['etapa' => 'Error importacion']);
             }
         }
 
-        $results = "Se cargaron ".$count_ok." registros a Salesforce; ";
-        $results .= "Poblemas de importacion ".$count_error." registros";
-        return $results;
+        if ($results == '') {
+            $tipo_mensaje = 'message-info';
+            $results = "Se cargaron ".$count_ok." registros a Salesforce";
+            $results .= ($count_error >= 1) ? "; Poblemas de importacion ".$count_error." registros".$respuesta[0]['message'] : "" ;
+        } else {
+            $tipo_mensaje = 'message-warning';
+        }
+
+        $arrayRes = array('tipo_mensaje' => $tipo_mensaje, 'respuesta' => $results);
+        return $arrayRes;
     }
 
     /**
@@ -216,7 +250,6 @@ class CampaignController extends Controller
                 $campaign->promocion          = $request->promocion;
                 $campaign->status             = $request->status;
                 $campaign->activo             = $activo;
-                $campaign->Consultas          = $request->consultas;
             $campaign->save();
 
             Session::flash('message-info', $campaign->codigo.': Cambios generados correctamente :)');
