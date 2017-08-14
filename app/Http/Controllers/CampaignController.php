@@ -155,11 +155,12 @@ class CampaignController extends Controller
                 'Status'                              => $candidate->status,
                 'Clinica__c'                          => $candidate->clinica,
                 'Fecha_de_cita__c'                    => $candidate->fecha_cita,
+                'hora_consulta__c'                    => $candidate->hora_consulta,
                 'Pre_Diagnostico__c'                  => $candidate->pre_diagnostico,
                 'presion_intraocular__c'              => $res_presion->presion_intraocular,
                 'glucosa_capilar__c'                  => $res_presion->glucosa_capilar,
                 'presion_arterial__c'                 => $res_presion->presion_arterial,
-                'presion_estado_medicion__c'          => $res_presion->presion_estado_medicion__c,
+                'presion_estado_medicion__c'          => $res_presion->presion_estado_medicion,
             );
 
             $jsonCandidate = json_encode($arrayCandidate);
