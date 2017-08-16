@@ -36,7 +36,7 @@
 			<br>
 			<div class="texto">
 				<strong>
-					<p>Nmbre: {{$candidate->nombres}} {{$candidate->apellidos}}</p>
+					<p>Nombre: {{$candidate->nombres}} {{$candidate->apellidos}}</p>
 					<p align="left">Paciente: {{$candidate->codigo}}<br>
 					Campaña: {{$campaign->codigo}}</p>
 					<p>Prediagnostico: {{$candidate->pre_diagnostico}} &nbsp ({{$candidate->ojo_prediagnostico}})</p>
