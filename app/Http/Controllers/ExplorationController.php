@@ -58,11 +58,18 @@ class ExplorationController extends Controller
     public function store(Request $request)
     {
         $campaign    = campaign::where('activo','=','Si')->first();
+        $presion_intraocular = $request->Iz_presion_intraocular."/".$request->Der_presion_intraocular;
+        $glucosa_capilar = $request->Iz_glucosa_capilar."/".$request->Der_glucosa_capilar;
+        $presion_arterial = $request->Iz_presion_arterial."/".$request->Der_presion_arterial;
         $exploration = exploration::find($request->id);
             $exploration->campaign_id                           = $campaign->id;
             $exploration->user_id                               = $request->user()->id;
             $exploration->parpados_posicion                     = $request->parpados_posicion;
             $exploration->parpados_ptosis                       = $request->parpados_ptosis;
+            $exploration->parpados_entropion                    = $request->parpados_entropion;
+            $exploration->parpados_ectroprion                   = $request->parpados_ectroprion;
+            $exploration->parpados_triquiasis                   = $request->parpados_triquiasis;
+            $exploration->parpados_blefaritis                   = $request->parpados_blefaritis;
             $exploration->parpados_otros                        = $request->parpados_otros;
             $exploration->segmento_anterior_secrecion           = $request->segmento_anterior_secrecion;
             $exploration->segmento_anterior_quemosis            = $request->segmento_anterior_quemosis;
@@ -107,9 +114,9 @@ class ExplorationController extends Controller
             $exploration->papila_neovasos                       = $request->papila_neovasos;
             $exploration->papila_vasos_bayoneta                 = $request->papila_vasos_bayoneta;
             $exploration->papila_hemorragia_astila              = $request->papila_hemorragia_astila;
-            $exploration->presion_intraocular                   = $request->presion_intraocular;
-            $exploration->glucosa_capilar                       = $request->glucosa_capilar;
-            $exploration->presion_arterial                      = $request->presion_arterial;
+            $exploration->presion_intraocular                   = $presion_intraocular;
+            $exploration->glucosa_capilar                       = $glucosa_capilar;
+            $exploration->presion_arterial                      = $presion_arterial;
             $exploration->presion_estado_medicion               = $request->presion_estado_medicion;
             $exploration->papila_otros                          = $request->papila_otros;
             $exploration->prediagnostico                        = 'Si';

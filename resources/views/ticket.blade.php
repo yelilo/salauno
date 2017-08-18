@@ -69,4 +69,7 @@
 				</strong>
 			</div>
 		</div>
+		<div class="noImp" style="text-align: center; padding-top: 8ex">
+			{!! link_to_route('consejeria.edit', $title = 'Volver', $parameters = $candidate->id, $attributes = array('title'=>'Editar', 'class' => 'noImp, btn btn-primary')) !!}
+		</div>
 @endsection

@@ -52,10 +52,6 @@ class CandidateController extends Controller
             Session::flash('message-info','No hay campaña activa');
             return Redirect::to('campaign');
         } else {
-            // print_r($_GET);
-            // $ocupacion = $_GET['ocupacion'];
-            // echo $ocupacion;
-            // echo "Errores: ".$errors;
             $render = new RenderController;
             $form_render = $render->index(1,0);
             return view('candidate.nuevo',['form_render'=>$form_render]);
@@ -108,11 +104,13 @@ class CandidateController extends Controller
             'genero'                    => $request->genero,
             'edad'                      => $edad,
             'ocupacion'                 => $request->ocupacion,
+            'tiene_seguro_medico'       => $request->tiene_seguro_medico,
             'seguro_medico'             => $request->seguro_medico,
             'seguro_medico_otro'        => $request->seguro_medico_otro,
             'numero_poliza'             => $request->numero_poliza,
             'telefono_fijo'             => $request->telefono_fijo,
             'telefono_celular'          => $request->telefono_celular,
+            'tiene_correo_electronico'  => $request->tiene_correo_electronico,
             'correo_electronico'        => $request->correo_electronico,
             'domicilio_cp'              => $request->domicilio_cp,
             'domicilio_ciudad'          => $request->domicilio_ciudad,

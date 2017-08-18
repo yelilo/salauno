@@ -249,12 +249,29 @@ class RenderController extends Controller
                                 }
                                 break;
                             case 'text':
+                                if($seccion->nombre == 'presion'){
+                                    $medidas = ['0','0'];
+                                    if($value){
+                                        $medidas = explode("/", $value);
+                                    }
+                                    $form_render .= '<tr>
+                                                    <td width="60%">'.$campo->titulo.'</td>
+                                                    <td colspan="2">
+                                                        <input type="number" min = "0" max = "900" maxlength="'.$campo->longitud.'" value="'.$medidas[0].'" name="Iz_'.$campo->nombre.'" id="'.$campo->nombre.'" class="form-control '.$campo->class.'" placeholder="'.$campo->placeholder.'">
+                                                    </td>
+                                                    <td colspan="2">
+                                                        <input type="number" min = "0" max = "900" maxlength="'.$campo->longitud.'" value="'.$medidas[1].'" name="Der_'.$campo->nombre.'" id="'.$campo->nombre.'" class="form-control '.$campo->class.'" placeholder="'.$campo->placeholder.'">
+                                                    </td>
+                                                </tr>';
+                                }
+                                else{
                                 $form_render .= '<tr>
                                                     <td width="60%">'.$campo->titulo.'</td>
                                                     <td colspan="2">
                                                         <input type="text" maxlength="'.$campo->longitud.'" value="'.$value.'" name="'.$campo->nombre.'" id="'.$campo->nombre.'" class="form-control '.$campo->class.'" placeholder="'.$campo->placeholder.'">
                                                     </td>
                                                 </tr>';
+                                }
                                 break;
                                 case 'select':
                                     $form_render .= '<tr>
@@ -290,6 +307,9 @@ class RenderController extends Controller
                                     $url = url($campo->nombre);
                                     $form_render .= '<div class="form-group '.$campo->nombre.'">
                                     <a href="'.$url.'" data-toggle="modal" data-target="#moda_'.$campo->nombre.'"><label class="'.$campo->nombre.'"> '.$campo->titulo.' ('.$ojoPred.')</label></a>';
+                                }
+                                else{
+                                    $form_render .='<div>';
                                 }
                             } else {
                                 $form_render .= '<div class="form-group '.$campo->nombre.'">
