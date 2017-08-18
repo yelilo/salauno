@@ -31,11 +31,11 @@ class SeguimientoController extends Controller
         $total_diabetes_hipertension = 0;
 
 
-        $total_catarata_incipiente      = 0;
-        $total_catarata_quirurgica      = 0;
+        $total_catarata                 = 0;
         $total_conjuntivitis            = 0;
         $total_excavacion_sospechosa    = 0;
         $total_fondo_coroideo           = 0;
+        $total_glaucoma                 = 0;
         $total_maculopatia              = 0;
         $total_no_valorable             = 0;
         $total_oculoplastica            = 0;
@@ -47,10 +47,7 @@ class SeguimientoController extends Controller
         $total_retinopatia_diabetica    = 0;
         $total_retinopatia_hipertensiva = 0;
         $total_revision                 = 0;
-        $total_sano                     = 0;
         $total_sin_hallazgo             = 0;
-        $total_sin_prediagnostico       = 0;
-        $total_valoracion_lasik         = 0;
 
         // ************ PENDIENTE DE REALIZAR ************
         // Cambiar la funcionalidad acual y poner un catalogo de prediagnosticos
@@ -72,26 +69,22 @@ class SeguimientoController extends Controller
 
             // <<< Prediagnosticos
 
-                $total_catarata_incipiente      = ($candidate->pre_diagnostico == 'Catarata incipiente') ? $total_catarata_incipiente + 1 : $total_catarata_incipiente;
-                $total_catarata_quirurgica      = ($candidate->pre_diagnostico == 'Catarata pb quirurgica') ? $total_catarata_quirurgica + 1 : $total_catarata_quirurgica;
+                $total_catarata      = ($candidate->pre_diagnostico == 'Catarata') ? $total_catarata + 1 : $total_catarata;
+                $total_glaucoma      = ($candidate->pre_diagnostico == 'Glaucoma preexistente') ? $total_glaucoma + 1 : $total_glaucoma;
                 $total_conjuntivitis            = ($candidate->pre_diagnostico == 'Conjuntivitis') ? $total_conjuntivitis + 1 : $total_conjuntivitis;
-                $total_excavacion_sospechosa    = ($candidate->pre_diagnostico == 'Excavacion Sospechosa') ? $total_excavacion_sospechosa + 1 : $total_excavacion_sospechosa;
-                $total_fondo_coroideo           = ($candidate->pre_diagnostico == 'Fondo coroideo / Adelgazamiento retina') ? $total_fondo_coroideo + 1 : $total_fondo_coroideo;
-                $total_maculopatia              = ($candidate->pre_diagnostico == 'Maculopatia') ? $total_maculopatia + 1 : $total_maculopatia;
+                $total_excavacion_sospechosa    = ($candidate->pre_diagnostico == 'Excavación Sospechosa') ? $total_excavacion_sospechosa + 1 : $total_excavacion_sospechosa;
+                $total_fondo_coroideo           = ($candidate->pre_diagnostico == 'Fondo coroideo/ Adelgazamiento de retina') ? $total_fondo_coroideo + 1 : $total_fondo_coroideo;
+                $total_maculopatia              = ($candidate->pre_diagnostico == 'Maculopatía') ? $total_maculopatia + 1 : $total_maculopatia;
+                $total_oculoplastica            = ($candidate->pre_diagnostico == 'Oculoplástica') ? $total_oculoplastica + 1 : $total_oculoplastica;
                 $total_no_valorable             = ($candidate->pre_diagnostico == 'No valorable') ? $total_no_valorable + 1 : $total_no_valorable;
-                $total_oculoplastica            = ($candidate->pre_diagnostico == 'Oculoplastica') ? $total_oculoplastica + 1 : $total_oculoplastica;
-                $total_ojo_seco                 = ($candidate->pre_diagnostico == 'Ojo seco') ? $total_ojo_seco + 1 : $total_ojo_seco;
-                $total_otro                     = ($candidate->pre_diagnostico == 'Otro') ? $total_otro + 1 : $total_otro;
-                $total_pterigion                = ($candidate->pre_diagnostico == 'Pterigion') ? $total_pterigion + 1 : $total_pterigion;
+                $total_ojo_seco                 = ($candidate->pre_diagnostico == 'Ojo Seco') ? $total_ojo_seco + 1 : $total_ojo_seco;
+                $total_pterigion                = ($candidate->pre_diagnostico == 'Pterigión') ? $total_pterigion + 1 : $total_pterigion;
                 $total_queratocono              = ($candidate->pre_diagnostico == 'Queratocono') ? $total_queratocono + 1 : $total_queratocono;
-                $total_refractivo               = ($candidate->pre_diagnostico == 'Refractivo') ? $total_refractivo + 1 : $total_refractivo;
-                $total_retinopatia_diabetica    = ($candidate->pre_diagnostico == 'Retinopatia Diabetica') ? $total_retinopatia_diabetica + 1 : $total_retinopatia_diabetica;
-                $total_retinopatia_hipertensiva = ($candidate->pre_diagnostico == 'Retinopatia Hipertensiva') ? $total_retinopatia_hipertensiva + 1 : $total_retinopatia_hipertensiva;
-                $total_revision                 = ($candidate->pre_diagnostico == 'Revision Integral') ? $total_revision + 1 : $total_revision;
-                $total_sano                     = ($candidate->pre_diagnostico == 'Sano') ? $total_sano + 1 : $total_sano;
-                $total_sin_hallazgo             = ($candidate->pre_diagnostico == 'Sin Hallazgo') ? $total_sin_hallazgo + 1 : $total_sin_hallazgo;
-                $total_sin_prediagnostico       = ($candidate->pre_diagnostico == 'Sin Pre-diagnostico') ? $total_sin_prediagnostico + 1 : $total_sin_prediagnostico;
-                $total_valoracion_lasik         = ($candidate->pre_diagnostico == 'Valoracion cirugia refractiva') ? $total_valoracion_lasik + 1 : $total_valoracion_lasik;
+                $total_refractivo               = ($candidate->pre_diagnostico == 'Refractivo (evaluar graduación)') ? $total_refractivo + 1 : $total_refractivo;
+                $total_retinopatia_diabetica    = ($candidate->pre_diagnostico == 'Retinopatía Diabética') ? $total_retinopatia_diabetica + 1 : $total_retinopatia_diabetica;
+                $total_retinopatia_hipertensiva = ($candidate->pre_diagnostico == 'Retinopatía Hipertensiva') ? $total_retinopatia_hipertensiva + 1 : $total_retinopatia_hipertensiva;
+                $total_otro                     = ($candidate->pre_diagnostico == 'Otro') ? $total_otro + 1 : $total_otro;
+                $total_sin_hallazgo             = ($candidate->pre_diagnostico == 'Sin Hallazgos') ? $total_sin_hallazgo + 1 : $total_sin_hallazgo;
             // Prediagnosticos >>>
         }
 
@@ -105,8 +98,8 @@ class SeguimientoController extends Controller
                                             'total_diabetes'                 => $total_diabetes,
                                             'total_hipertension'             => $total_hipertension,
                                             'total_diabetes_hipertension'    => $total_diabetes_hipertension,
-                                            'total_catarata_incipiente'      => $total_catarata_incipiente,
-                                            'total_catarata_quirurgica'      => $total_catarata_quirurgica,
+                                            'total_glaucoma'                 => $total_glaucoma,
+                                            'total_catarata'                 => $total_catarata,
                                             'total_conjuntivitis'            => $total_conjuntivitis,
                                             'total_excavacion_sospechosa'    => $total_excavacion_sospechosa,
                                             'total_fondo_coroideo'           => $total_fondo_coroideo,
@@ -121,10 +114,7 @@ class SeguimientoController extends Controller
                                             'total_retinopatia_diabetica'    => $total_retinopatia_diabetica,
                                             'total_retinopatia_hipertensiva' => $total_retinopatia_hipertensiva,
                                             'total_revision'                 => $total_revision,
-                                            'total_sano'                     => $total_sano,
                                             'total_sin_hallazgo'             => $total_sin_hallazgo,
-                                            'total_sin_prediagnostico'       => $total_sin_prediagnostico,
-                                            'total_valoracion_lasik'         => $total_valoracion_lasik,
                                         ]);
     }
 

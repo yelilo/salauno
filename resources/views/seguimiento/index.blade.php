@@ -60,18 +60,18 @@
           <div class="panel-body">
             <table class="table">
               <tr>
-                <th>Catarata incipiente</th>
-                <th>Catarata pb quirurgica</th>
+                <th>Catarata</th>
                 <th>Conjuntivitis</th>
                 <th>Excavacion Sospechosa</th>
                 <th>Fondo coroideo / Adelgazamiento retina</th>
+                <th>Glaucoma preexistente</th>
               </tr>
               <tr>
-                <td>{!!$total_catarata_incipiente!!}</td>
-                <td>{!!$total_catarata_quirurgica!!}</td>
+                <td>{!!$total_catarata!!}</td>
                 <td>{!!$total_conjuntivitis!!}</td>
                 <td>{!!$total_excavacion_sospechosa!!}</td>
                 <td>{!!$total_fondo_coroideo!!}</td>
+                <td>{!!$total_glaucoma!!}</td>
               </tr>
               <tr>
                 <th>Maculopatia</th>
@@ -103,17 +103,11 @@
               </tr>
               <tr>
                 <th>Revision Integral</th>
-                <th>Sano</th>
                 <th>Sin Hallazgo</th>
-                <th>Sin Pre-diagnostico</th>
-                <th>Valoracion cirugia refractiva</th>
               </tr>
               <tr>
                 <td>{!!$total_revision!!}</td>
-                <td>{!!$total_sano!!}</td>
-                <td>{!!$total_sin_hallazgo!!}</td>
-                <td>{!!$total_sin_prediagnostico!!}</td>
-                <td>{!!$total_valoracion_lasik!!}</td>
+                <td>{!!$total_sin_hallazgo!!}</td>                
               </tr>
             </table>
           </div>
