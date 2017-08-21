@@ -80,6 +80,7 @@ class ExplorationController extends Controller
             $exploration->segmento_anterior_hemorragia          = $request->segmento_anterior_hemorragia;
             $exploration->segmento_anterior_sinequia            = $request->segmento_anterior_sinequia;
             $exploration->segmento_anterior_otros               = $request->segmento_anterior_otros;
+            $exploration->iris_no_valorable                     = $request->iris_no_valorable;
             $exploration->iris_dpa                              = $request->iris_dpa;
             $exploration->iris_aniridia                         = $request->iris_aniridia;
             $exploration->iris_anisocoria                       = $request->iris_anisocoria;
@@ -91,6 +92,7 @@ class ExplorationController extends Controller
             $exploration->vitreo_hemorragia                     = $request->vitreo_hemorragia;
             $exploration->vitreo_sinquisis                      = $request->vitreo_sinquisis;
             $exploration->vitreo_otros                          = $request->vitreo_otros;
+            $exploration->retina_no_valorable                   = $request->retina_no_valorable;
             $exploration->retina_desprendimiento                = $request->retina_desprendimiento;
             $exploration->retina_microaneurismas                = $request->retina_microaneurismas;
             $exploration->retina_exudados                       = $request->retina_exudados;
@@ -102,6 +104,7 @@ class ExplorationController extends Controller
             $exploration->retina_tortosidad_venosa              = $request->retina_tortosidad_venosa;
             $exploration->retina_adelgazamiento_vascular        = $request->retina_adelgazamiento_vascular;
             $exploration->retina_otros                          = $request->retina_otros;
+            $exploration->macula_no_valorable                   = $request->macula_no_valorable;
             $exploration->macula_brillo                         = $request->macula_brillo;
             $exploration->macula_edema                          = $request->macula_edema;
             $exploration->macula_desprendimiento                = $request->macula_desprendimiento;

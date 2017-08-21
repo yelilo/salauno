@@ -261,6 +261,7 @@ class CampaignController extends Controller
                 $campaign->tipo_campania      = $request->tipo_campania;
                 $campaign->promocion          = $request->promocion;
                 $campaign->status             = $request->status;
+                $campaign->consultas          = $request->consultas;
                 $campaign->activo             = $activo;
             $campaign->save();
 

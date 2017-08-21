@@ -51,7 +51,7 @@
 						echo($fecha_ord."&nbsp &nbsp");
 						echo("<br>Hora: ".$hora."<br>");
 					?>
-					Consulta: {{$candidate->tipo_consulta}}<br>
+					Artículo de cita: {{$candidate->tipo_consulta}}<br>
 					Clinica: {{$clinica->nombre}}<br>
 					{{$clinica->direccion}}</p>
 					@endif

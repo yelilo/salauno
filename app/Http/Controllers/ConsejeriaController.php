@@ -8,6 +8,7 @@ use Session;
 use Redirect;
 use App\campaign;
 use App\candidate;
+use App\refraction;
 use App\Http\Requests;
 use App\Http\Controllers\ExplorationController;
 use App\Http\Controllers\RenderController;
@@ -97,12 +98,14 @@ class ConsejeriaController extends Controller
     {
         $etapa = 'Terminado';
         $candidate = candidate::find($id);
-            $candidate->etapa      = $etapa;
-            $candidate->status     = $request->status;
-            $candidate->fecha_cita = $request->fecha_cita;
-            $candidate->clinica    = $request->clinica;
-            $candidate->tipo_consulta = $request->tipo_consulta;
-            $candidate->hora_consulta = $request->hora_consulta;
+            $candidate->etapa                   = $etapa;
+            $candidate->status                  = $request->status;
+            $candidate->fecha_cita              = $request->fecha_cita;
+            $candidate->clinica                 = $request->clinica;
+            $candidate->pre_diagnostico         = $request->pre_diagnostico;
+            $candidate->ojo_prediagnostico      = $request->ojo_prediagnostico;
+            $candidate->tipo_consulta           = $request->tipo_consulta;
+            $candidate->hora_consulta           = $request->hora_consulta;
         $candidate->save();
         if($request->comprobante) {
             return $this->show($id);

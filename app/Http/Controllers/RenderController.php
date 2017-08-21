@@ -302,7 +302,8 @@ class RenderController extends Controller
                            if ($campo->tipo == 'hidden') {
                                 $enfermedades = DB::select('select '.$campo->nombre.' from results where candidate_id = \''.$id_registro.'\'');
                                 $busqueda = $campo->nombre;
-                                $ojoPred = $enfermedades[0]->$busqueda;
+                                if($enfermedades)
+                                    $ojoPred = $enfermedades[0]->$busqueda;
                                 if(!empty($ojoPred)){
                                     $url = url($campo->nombre);
                                     $form_render .= '<div class="form-group '.$campo->nombre.'">
