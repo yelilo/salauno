@@ -113,89 +113,92 @@ class CampaignController extends Controller
                     ->where('candidates.campaign_id','=',$campaign->id)
                     ->where('candidates.etapa','<>','Enviado a SF')
                     ->select('candidates.*', 'campaigns.codigo AS codigocp')
+                    ->limit(40)
                     ->get();
                     // ->where('candidates.etapa','<>','Duplicado a SF')
 
         $acc = new ConfiguracionController;
 
-        foreach ($candidates as $key => $candidate) {
-            if ($results != '') {
-                break;
-            }
-            $res_presion = DB::selectone('select * from explorations where candidate_id = \''.$candidate->id.'\'');
-                // 'CreatedById'                         => '00536000000uxPYAAY',
-            $arrayCandidate = array(
-                'OwnerId'                             => '00536000000uxPYAAY',
-                'Campana__c'                          => $candidate->codigocp,
-                'ID_Candidato__c'                     => $candidate->codigo,
-                'FirstName'                           => $candidate->nombres,
-                'LastName'                            => $candidate->apellidos,
-                'Sexo__c'                             => $candidate->genero,
-                'PersonBirthdate__c'                  => $candidate->fecha_nacimiento,
-                'Ocupacion__c'                        => $candidate->ocupacion,
-                'Seguro_Medico__c'                    => $candidate->seguro_medico,
-                'Seguro_Medico_Cual_Otro__c'          => $candidate->seguro_medico_otro,
-                'Numero_de_Poliza__c'                 => $candidate->numero_poliza,
-                'Phone'                               => $candidate->telefono_fijo,
-                'MobilePhone'                         => $candidate->telefono_celular,
-                'Email'                               => $candidate->correo_electronico,
-                'PostalCode'                          => $candidate->domicilio_cp,
-                'State'                               => $candidate->domicilio_poblacion,
-                'City'                                => $candidate->domicilio_ciudad,
-                'Diabetes__c'                         => $candidate->diabetes,
-                'Tiempo_de_evolucion_Diabetes__c'     => $candidate->diabetes_tiempo_anios,
-                'Retinopatia_Diabetica__c'            => $candidate->retinopatia_diabetica,
-                'Hipertension__c'                     => $candidate->hipertension,
-                'Tiempo_de_evolucion_Hipertension__c' => $candidate->hipertension_tiempo_anios,
-                'Otra_enfermedad__c'                  => $candidate->enfermedad_tiroides,
-                'Notado_disminucion_vision__c'        => $candidate->disminucion_vista,
-                'Tiempo_examen_consulta__c'           => $candidate->examen_visual,
-                'Cirugia_de_ojo__c'                   => $candidate->cirugia_ojo,
-                'Cirugia_Ojo_Cual__c'                 => $candidate->cirugia_ojo_cual,
-                'Status'                              => $candidate->status,
-                'Clinica__c'                          => $candidate->clinica,
-                'Fecha_de_cita__c'                    => $candidate->fecha_cita,
-                'hora_consulta__c'                    => $candidate->hora_consulta,
-                'tipo_consulta__c'                    => $candidate->tipo_consulta,
-                'Pre_Diagnostico__c'                  => $candidate->pre_diagnostico,
-                'ojo_prediagnostico__c'               => $candidate->ojo_prediagnostico,
-                'presion_intraocular__c'              => $res_presion->presion_intraocular,
-                'glucosa_capilar__c'                  => $res_presion->glucosa_capilar,
-                'presion_arterial__c'                 => $res_presion->presion_arterial,
-                'presion_estado_medicion__c'          => $res_presion->presion_estado_medicion,
-            );
-
-            $jsonCandidate = json_encode($arrayCandidate);
-            $respuesta     = $acc->sincCandidato($jsonCandidate);
-            $respuesta     = json_decode($respuesta, true);
-
-            echo "<pre>";
-            echo var_dump($respuesta);
-
-            if (array_key_exists('id', $respuesta)) {
-                $count_ok++;
-                $salesforce_id = $respuesta['id'];
-                candidate::where('id', $candidate->id)
-                            ->update(['etapa' => 'Enviado a SF','salesforce_id' => $salesforce_id]);
-
-            } elseif (array_key_exists('message', $respuesta[0])) {
-
-                $count_error++;
-                $pos = strpos($respuesta[0]['message'], 'candidatoCampana');
-                if ($pos !== false) {
-                    $results = "Verifique que la campaña este creada en Salesforce para poder subir los candidatos.";
-                } else {
-                    $results .= $candidate->codigo." - ".$respuesta[0]['message'];
-                    candidate::where('id', $candidate->id)
-                            ->update(['etapa' => 'Duplicado en SF']);
+        
+            foreach ($candidates as $key => $candidate) {
+                if ($results != '') {
+                    break;
                 }
+                $res_presion = DB::selectone('select * from explorations where candidate_id = \''.$candidate->id.'\'');
+                    // 'CreatedById'                         => '00536000000uxPYAAY',
+                $arrayCandidate = array(
+                    'OwnerId'                             => '00536000000uxPYAAY',
+                    'Campana__c'                          => $candidate->codigocp,
+                    'ID_Candidato__c'                     => $candidate->codigo,
+                    'FirstName'                           => $candidate->nombres,
+                    'LastName'                            => $candidate->apellidos,
+                    'Sexo__c'                             => $candidate->genero,
+                    'PersonBirthdate__c'                  => $candidate->fecha_nacimiento,
+                    'Ocupacion__c'                        => $candidate->ocupacion,
+                    'Seguro_Medico__c'                    => $candidate->seguro_medico,
+                    'Seguro_Medico_Cual_Otro__c'          => $candidate->seguro_medico_otro,
+                    'Numero_de_Poliza__c'                 => $candidate->numero_poliza,
+                    'Phone'                               => $candidate->telefono_fijo,
+                    'MobilePhone'                         => $candidate->telefono_celular,
+                    'Email'                               => $candidate->correo_electronico,
+                    'PostalCode'                          => $candidate->domicilio_cp,
+                    'State'                               => $candidate->domicilio_poblacion,
+                    'City'                                => $candidate->domicilio_ciudad,
+                    'Diabetes__c'                         => $candidate->diabetes,
+                    'Tiempo_de_evolucion_Diabetes__c'     => $candidate->diabetes_tiempo_anios,
+                    'Retinopatia_Diabetica__c'            => $candidate->retinopatia_diabetica,
+                    'Hipertension__c'                     => $candidate->hipertension,
+                    'Tiempo_de_evolucion_Hipertension__c' => $candidate->hipertension_tiempo_anios,
+                    'Otra_enfermedad__c'                  => $candidate->enfermedad_tiroides,
+                    'Notado_disminucion_vision__c'        => $candidate->disminucion_vista,
+                    'Tiempo_examen_consulta__c'           => $candidate->examen_visual,
+                    'Cirugia_de_ojo__c'                   => $candidate->cirugia_ojo,
+                    'Cirugia_Ojo_Cual__c'                 => $candidate->cirugia_ojo_cual,
+                    'Status'                              => $candidate->status,
+                    'Clinica__c'                          => $candidate->clinica,
+                    'Fecha_de_cita__c'                    => $candidate->fecha_cita,
+                    'hora_consulta__c'                    => $candidate->hora_consulta,
+                    'tipo_consulta__c'                    => $candidate->tipo_consulta,
+                    'Pre_Diagnostico__c'                  => $candidate->pre_diagnostico,
+                    'ojo_prediagnostico__c'               => $candidate->ojo_prediagnostico,
+                    'presion_intraocular__c'              => $res_presion->presion_intraocular,
+                    'glucosa_capilar__c'                  => $res_presion->glucosa_capilar,
+                    'presion_arterial__c'                 => $res_presion->presion_arterial,
+                    'presion_estado_medicion__c'          => $res_presion->presion_estado_medicion,
+                );
 
-            } else {
+                $jsonCandidate = json_encode($arrayCandidate);
+                $respuesta     = $acc->sincCandidato($jsonCandidate);
+                $respuesta     = json_decode($respuesta, true);
 
-                $count_error++;
-                candidate::where('id', $candidate->id)
-                              ->update(['etapa' => 'Error importacion']);
-            }
+                echo "<pre>";
+                echo var_dump($respuesta);
+
+                if (array_key_exists('id', $respuesta)) {
+                    $count_ok++;
+                    $salesforce_id = $respuesta['id'];
+                    candidate::where('id', $candidate->id)
+                                ->update(['etapa' => 'Enviado a SF','salesforce_id' => $salesforce_id]);
+
+                } elseif (array_key_exists('message', $respuesta[0])) {
+
+                    $count_error++;
+                    $pos = strpos($respuesta[0]['message'], 'candidatoCampana');
+                    if ($pos !== false) {
+                        $results = "Verifique que la campaña este creada en Salesforce para poder subir los candidatos.";
+                    } else {
+                        $results .= $candidate->codigo." - ".$respuesta[0]['message'];
+                        candidate::where('id', $candidate->id)
+                                ->update(['etapa' => 'Duplicado en SF']);
+                    }
+
+                } else {
+
+                    $count_error++;
+                    candidate::where('id', $candidate->id)
+                                ->update(['etapa' => 'Error importacion']);
+                }
+                
         }
 
         if ($results == '') {
