@@ -26,6 +26,8 @@ class refraction extends Model
 		'refaccion_od_av',
 		'refaccion_oi_av',
 		'refaccion_add',
+		'od_rf_av',
+		'id_rf_av',
 		'refaccion_final_od_esferico',
 		'refaccion_final_oi_esferico',
 		'refaccion_final_od_cilindrico',

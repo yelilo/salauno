@@ -107,11 +107,13 @@ class ConsejeriaController extends Controller
             $candidate->tipo_consulta           = $request->tipo_consulta;
             $candidate->hora_consulta           = $request->hora_consulta;
         $candidate->save();
-        $refraction = refraction::where('id_candidate','=',$id);
+        /*$refraction = App\refraction::updateOrCreate(['candidate_id'=>$id,
+                                    'od_rf_av'=>$request->od_rf_av,
+                                    'id_rf_av'=>$request->id_rf_av]);*/
+        $refraction = refraction::where('candidate_id','=',$id)->first();
             $refraction->od_rf_av = $request->od_rf_av;
             $refraction->oi_rf_av = $request->oi_rf_av;
         $refraction->save();
-
         if($request->comprobante) {
             return $this->show($id);
         }
