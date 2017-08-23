@@ -37,7 +37,7 @@
 			<div class="texto">
 				<strong>
 					<p>Nombre: {{$candidate->nombres}} {{$candidate->apellidos}}</p>
-					<p align="left">Paciente: {{$candidate->codigo}}<br>
+					<p align="left">Código: {{$candidate->codigo}}<br>
 					Campaña: {{$campaign->codigo}}</p>
 					<p>Prediagnostico: {{$candidate->pre_diagnostico}} &nbsp ({{$candidate->ojo_prediagnostico}})</p>
 					@if($candidate->status == 'Con cita')
@@ -45,11 +45,11 @@
 					<p>
 					<?php
 						$hora = substr($candidate->hora_consulta, 0,5);
-						$fecha_ord = "Fecha: ".substr($candidate->fecha_cita, 5, 2).'-'
-						.substr($candidate->fecha_cita, 8, 2).'-'
+						$fecha_ord = "Fecha y Hora: ".substr($candidate->fecha_cita, 8, 2).'-'
+						.substr($candidate->fecha_cita, 5, 2).'-'
 						.substr($candidate->fecha_cita, 0, 4);  
 						echo($fecha_ord."&nbsp &nbsp");
-						echo("<br>Hora: ".$hora."<br>");
+						echo("&nbsp &nbsp".$hora."hrs<br>");
 					?>
 					Artículo de cita: {{$candidate->tipo_consulta}}<br>
 					Clinica: {{$clinica->nombre}}<br>
@@ -65,7 +65,7 @@
 			</div>
 			<div class="texto" style="text-align: center;">
 				<strong>
-					Telefono: (55) 6728 3000 &nbsp &nbsp &nbsp &nbsp www.salauno.mx
+					Telefono: (55) 6728 3000 &nbsp &nbsp &nbsp &nbsp www.salauno.com.mx
 				</strong>
 			</div>
 		</div>
