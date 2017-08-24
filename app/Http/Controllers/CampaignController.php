@@ -1,4 +1,4 @@
-<?php
+1<?php
 
 namespace App\Http\Controllers;
 
@@ -165,6 +165,9 @@ class CampaignController extends Controller
                     'glucosa_capilar__c'                  => $res_presion->glucosa_capilar,
                     'presion_arterial__c'                 => $res_presion->presion_arterial,
                     'presion_estado_medicion__c'          => $res_presion->presion_estado_medicion,
+                    'Medio_o_Canal__c'                    => 'Campaña',
+                    'Medio__c'                            => 'Sistema Campañas',
+                    'Clinica_de_Interes__c'               => $candidate->clinica,
                 );
 
                 $jsonCandidate = json_encode($arrayCandidate);

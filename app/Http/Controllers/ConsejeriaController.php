@@ -9,6 +9,7 @@ use Redirect;
 use App\campaign;
 use App\candidate;
 use App\refraction;
+use App\exploration;
 use App\Http\Requests;
 use App\Http\Controllers\ExplorationController;
 use App\Http\Controllers\RenderController;
@@ -107,6 +108,19 @@ class ConsejeriaController extends Controller
             $candidate->tipo_consulta           = $request->tipo_consulta;
             $candidate->hora_consulta           = $request->hora_consulta;
         $candidate->save();
+
+        //Datos de enfermeria
+        $exploration = exploration::where('candidate_id','=',$id)->first();
+        echo($request->presion_estado_medicion);
+        $presion_intraocular = $request->Iz_presion_intraocular."/".$request->Der_presion_intraocular;
+        $glucosa_capilar = $request->Iz_glucosa_capilar."/".$request->Der_glucosa_capilar;
+        $presion_arterial = $request->Iz_presion_arterial."/".$request->Der_presion_arterial;
+        $exploration->presion_intraocular                   = $presion_intraocular;
+        $exploration->glucosa_capilar                       = $glucosa_capilar;
+        $exploration->presion_arterial                      = $presion_arterial;
+        $exploration->presion_estado_medicion               = $request->presion_estado_medicion;
+        $exploration->save();
+
         /*$refraction = App\refraction::updateOrCreate(['candidate_id'=>$id,
                                     'od_rf_av'=>$request->od_rf_av,
                                     'id_rf_av'=>$request->id_rf_av]);*/
