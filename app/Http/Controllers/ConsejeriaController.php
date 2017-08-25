@@ -107,11 +107,11 @@ class ConsejeriaController extends Controller
             $candidate->ojo_prediagnostico      = $request->ojo_prediagnostico;
             $candidate->tipo_consulta           = $request->tipo_consulta;
             $candidate->hora_consulta           = $request->hora_consulta;
+            
         $candidate->save();
 
         //Datos de enfermeria
         $exploration = exploration::where('candidate_id','=',$id)->first();
-        echo($request->presion_estado_medicion);
         $presion_intraocular = $request->Iz_presion_intraocular."/".$request->Der_presion_intraocular;
         $glucosa_capilar = $request->Iz_glucosa_capilar."/".$request->Der_glucosa_capilar;
         $presion_arterial = $request->Iz_presion_arterial."/".$request->Der_presion_arterial;
@@ -124,10 +124,10 @@ class ConsejeriaController extends Controller
         /*$refraction = App\refraction::updateOrCreate(['candidate_id'=>$id,
                                     'od_rf_av'=>$request->od_rf_av,
                                     'id_rf_av'=>$request->id_rf_av]);*/
-        $refraction = refraction::where('candidate_id','=',$id)->first();
+        /*$refraction = refraction::where('candidate_id','=',$id)->first();
             $refraction->od_rf_av = $request->od_rf_av;
             $refraction->oi_rf_av = $request->oi_rf_av;
-        $refraction->save();
+        $refraction->save();*/
         if($request->comprobante) {
             return $this->show($id);
         }

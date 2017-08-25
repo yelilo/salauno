@@ -1,4 +1,4 @@
-1<?php
+<?php
 
 namespace App\Http\Controllers;
 
@@ -77,6 +77,7 @@ class CampaignController extends Controller
                 $campaign->tipo_campania      = $request->tipo_campania;
                 $campaign->promocion          = $request->promocion;
                 $campaign->status             = $request->status;
+                $campaign->consultas          = $request->consultas;
                 $campaign->activo             = $activo;
             $campaign->save();
 
@@ -126,6 +127,7 @@ class CampaignController extends Controller
                 }
                 $res_presion = DB::selectone('select * from explorations where candidate_id = \''.$candidate->id.'\'');
                     // 'CreatedById'                         => '00536000000uxPYAAY',
+
                 $arrayCandidate = array(
                     'OwnerId'                             => '00536000000uxPYAAY',
                     'Campana__c'                          => $candidate->codigocp,
@@ -170,6 +172,27 @@ class CampaignController extends Controller
                     'Clinica_de_Interes__c'               => $candidate->clinica,
                 );
 
+                if($candidate->status != 'Con cita'){
+                    var_dump($arrayCandidate);
+                    unset($arrayCandidate['Fecha_de_cita__c']);
+                    unset($arrayCandidate['hora_consulta__c']);
+                    unset($arrayCandidate['tipo_consulta__c']);
+                    echo('<br><br>');
+                    var_dump(array_filter($arrayCandidate));
+                }
+
+                if (!$res_presion->presion_intraocular) {
+                    unset($arrayCandidate['presion_intraocular__c']);
+                }
+                if (!$res_presion->glucosa_capilar) {
+                    unset($arrayCandidate['glucosa_capilar__c']);
+                }
+                if (!$res_presion->presion_arterial) {
+                    unset($arrayCandidate['presion_arterial__c']);
+                }
+                if (!$res_presion->presion_estado_medicion) {
+                    unset($arrayCandidate['presion_estado_medicion__c']);
+                }
                 $jsonCandidate = json_encode($arrayCandidate);
                 $respuesta     = $acc->sincCandidato($jsonCandidate);
                 $respuesta     = json_decode($respuesta, true);
