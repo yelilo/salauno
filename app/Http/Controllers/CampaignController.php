@@ -119,7 +119,6 @@ class CampaignController extends Controller
                     // ->where('candidates.etapa','<>','Duplicado a SF')
 
         $acc = new ConfiguracionController;
-
         
             foreach ($candidates as $key => $candidate) {
                 if ($results != '') {
@@ -177,8 +176,6 @@ class CampaignController extends Controller
                     unset($arrayCandidate['Fecha_de_cita__c']);
                     unset($arrayCandidate['hora_consulta__c']);
                     unset($arrayCandidate['tipo_consulta__c']);
-                    echo('<br><br>');
-                    var_dump(array_filter($arrayCandidate));
                 }
 
                 if (!$res_presion->presion_intraocular) {
@@ -234,7 +231,6 @@ class CampaignController extends Controller
         } else {
             $tipo_mensaje = 'message-warning';
         }
-
         $arrayRes = array('tipo_mensaje' => $tipo_mensaje, 'respuesta' => $results);
         return $arrayRes;
     }
