@@ -20,6 +20,11 @@
                 <button type="button" class="btn btn-primary" onclick="location.href='home'">
                     Ingresa
                 </button>
+                @if(!$candidatos && $version)
+                    {!! link_to_route('welcome.index', $title = 'Actualizar', $parameters = 0, $attributes = array('class'=>'btn btn-primary','title'=>'Editar')) !!}
+                @elseif($candidatos > 0 && $version)
+                    <h4 class="text-primary">"Aún quedan candidatos pendientes por enviar a SF"</h4>
+                @endif
             </div>
         </div>
     </div>

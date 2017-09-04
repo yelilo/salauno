@@ -11,9 +11,7 @@
 |
 */
 Route::auth();
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::resource('/','WelcomeController');
 
 Route::get('/home', 'HomeController@index');
 
@@ -27,6 +25,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('refraction', 'RefractionController');
 	Route::resource('review', 'ReviewController');
 	Route::resource('seguimiento', 'SeguimientoController');
+	Route::resource('welcome','WelcomeController@actualizar');
 
 	Route::get('catarata_incipiente', function () {
 		    return view('enfermedades.catarata');
