@@ -7,7 +7,7 @@ CHDIR "C:\xampp\htdocs"
 
 git clone https://github.com/yelilo/salauno.git
 
-CHDIR "C:\xampp\htdocs\salauno_correcciones" 
+CHDIR "C:\xampp\htdocs\salauno" 
 
 git fetch
 git pull origin master

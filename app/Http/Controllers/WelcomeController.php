@@ -39,9 +39,9 @@ class WelcomeController extends Controller
     $base_file;
 
 	$mysql_user = 'root';
-	$mysql_pass = '';
+	$mysql_pass = 'salauno***';
 	$mysql_host = 'localhost';
-	$base_db = 'test';
+	$base_db = 'salauno_campanias';
 	$sql_file = '../salauno_campanias.sql';
 	global $version_n;
 
