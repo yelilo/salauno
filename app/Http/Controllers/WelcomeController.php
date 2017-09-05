@@ -12,6 +12,9 @@ use Redirect;
 
 class WelcomeController extends Controller
 {
+
+	private $version_n = 2;
+	private $version_act;
     // use CandidateRequest;
     /**
      * Display a listing of the resource.
@@ -20,12 +23,11 @@ class WelcomeController extends Controller
      */
     public function index()
     {
-    	$version_n = 2;
     	$actualizar = 1;
     	$candidate = candidate::where('etapa','!=','Enviado a SF')->count();
     	$version_act = DB::table('configurations')->where('client_id','version_actual')->value('actualizar_sist');
     	if($version_act){
-    		if($version_act == $version_n){
+    		if($version_act == $this->version_n){
 	    		$actualizar = 0;
     		}
     	}
@@ -33,15 +35,15 @@ class WelcomeController extends Controller
 
     }
 
-    public static function actualizar(){
-    		$base_file;
+    public function actualizar(){
+    $base_file;
 
 	$mysql_user = 'root';
 	$mysql_pass = '';
 	$mysql_host = 'localhost';
 	$base_db = 'test';
 	$sql_file = '../salauno_campanias.sql';
-
+	global $version_n;
 
 	$id_db = mysqli_connect($mysql_host, $mysql_user, $mysql_pass) or die('Error en la conexion');
 	mysqli_select_db($id_db,$base_db) or die('<script = javascript>alert(\'Base de datos no encontrada\')</script>');
@@ -63,6 +65,7 @@ class WelcomeController extends Controller
 			$temp = '';
 		}
 	}
+	$version_act = DB::table('configurations')->where('client_id','version_actual')->update(['actualizar_sist'=>$this->version_n]);
 	print('<script = javascript>alert(\'Base de datos actualizada\')</script>');
     	return view('welcome.index',['candidatos'=>0, 'version'=>0]);
     }
