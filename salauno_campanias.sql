@@ -27,6 +27,8 @@ SET time_zone = "+00:00";
 --
 -- Estructura de tabla para la tabla `campaigns`
 --
+TRUNCATE `campaigns`;
+DROP TABLE `campaigns`;
 
 CREATE TABLE `campaigns` (
   `id` int(11) NOT NULL,
@@ -50,10 +52,12 @@ CREATE TABLE `campaigns` (
 -- Volcado de datos para la tabla `campaigns`
 --
 
-TRUNCATE `campaigns`;
 --
 -- Estructura de tabla para la tabla `candidates`
 --
+
+TRUNCATE `candidates`;
+DROP TABLE `candidates`;
 
 CREATE TABLE `candidates` (
   `id` int(10) UNSIGNED NOT NULL,
@@ -110,7 +114,6 @@ CREATE TABLE `candidates` (
 -- Volcado de datos para la tabla `candidates`
 --
 
-TRUNCATE `candidates`;
 -- --------------------------------------------------------
 
 --
@@ -156,21 +159,20 @@ CREATE TABLE `configurations` (
   `username` text,
   `password` text,
   `url_tk` varchar(50) DEFAULT NULL,
-  `activo` enum('Si','No') DEFAULT 'No'
+  `activo` enum('Si','No') DEFAULT 'No',
+  `actualizar_sist` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `configurations`
 --
 
-INSERT INTO `configurations` (`id`, `client_id`, `client_secret`, `username`, `password`, `url_tk`, `activo`) VALUES
-(1, '3MVG93MGy9V8hF9M2UmXz0Q0GQixWs3S_MPPYkN2JlUqx71ULL', '2678466391247652633', 'edgar.guerra@salauno.com.mx.dev3', 'Salauno2016*Gqr0m9qSaOLdDZTGujQ0INrn', 'https://test.salesforce.com/services/oauth2/token', 'No'),
-(2, '3MVG93MGy9V8hF9M2UmXz0Q0GQiSkvOpd6m0i8YKEZSxn4QupNH9hywyQ03mPSC8XVr6H1OMMpOKlaQog2w99', '5678725638604264682', 'pedro.jauregui@salauno.com.mx.dev3', 'cl0udc028bWaF9z5XyYhPJvxIUNsC0lfO', 'https://test.salesforce.com/services/oauth2/token', 'No'),
-(3, '3MVG93MGy9V8hF9M2UmXz0Q0GQiSkvOpd6m0i8YKEZSxn4QupNH9hywyQ03mPSC8XVr6H1OMMpOKlaQog2w99', '5678725638604264682', 'pedro.jauregui@salauno.com.mx.dev4', 'cl0udc04r530nWkYHWDP6wYj0DV7dDAR', 'https://test.salesforce.com/services/oauth2/token', 'No'),
-(4, '3MVG9uudbyLbNPZOitpGGxfSVAQG2CTBUaIH.HxGGa9C8j2cf5.1CrwcllfGIc55GcK.0m29TvwVHhTrP5Pfb', '3556869032589325760', 'edgar.guerra@salauno.com.mx', '17SALAUNOWEBr1WJ9Db07AUAPjnRDF4hrr', 'https://login.salesforce.com/services/oauth2/token', 'Si');
-
--- --------------------------------------------------------
-
+INSERT INTO `configurations` (`id`, `client_id`, `client_secret`, `username`, `password`, `url_tk`, `activo`, `actualizar_sist`) VALUES
+(1, '3MVG93MGy9V8hF9M2UmXz0Q0GQixWs3S_MPPYkN2JlUqx71ULL', '2678466391247652633', 'edgar.guerra@salauno.com.mx.dev3', 'Salauno2016*Gqr0m9qSaOLdDZTGujQ0INrn', 'https://test.salesforce.com/services/oauth2/token', 'No', NULL),
+(2, '3MVG93MGy9V8hF9M2UmXz0Q0GQiSkvOpd6m0i8YKEZSxn4QupNH9hywyQ03mPSC8XVr6H1OMMpOKlaQog2w99', '5678725638604264682', 'pedro.jauregui@salauno.com.mx.dev3', 'cl0udc028bWaF9z5XyYhPJvxIUNsC0lfO', 'https://test.salesforce.com/services/oauth2/token', 'No', NULL),
+(3, '3MVG93MGy9V8hF9M2UmXz0Q0GQiSkvOpd6m0i8YKEZSxn4QupNH9hywyQ03mPSC8XVr6H1OMMpOKlaQog2w99', '5678725638604264682', 'pedro.jauregui@salauno.com.mx.dev4', 'cl0udc04r530nWkYHWDP6wYj0DV7dDAR', 'https://test.salesforce.com/services/oauth2/token', 'No', NULL),
+(4, '3MVG9uudbyLbNPZOitpGGxfSVAQG2CTBUaIH.HxGGa9C8j2cf5.1CrwcllfGIc55GcK.0m29TvwVHhTrP5Pfb', '3556869032589325760', 'edgar.guerra@salauno.com.mx', '17SALAUNOWEBr1WJ9Db07AUAPjnRDF4hrr', 'https://login.salesforce.com/services/oauth2/token', 'Si', NULL),
+(5, 'version_actual', NULL, NULL, NULL, NULL, 'No', 1);
 --
 -- Estructura de tabla para la tabla `core_render_campos`
 --
@@ -849,6 +851,8 @@ CREATE TABLE `displays` (
 --
 -- Estructura de tabla para la tabla `explorations`
 --
+TRUNCATE `explorations`;
+DROP TABLE `explorations`;
 
 CREATE TABLE `explorations` (
   `id` int(11) NOT NULL,
@@ -922,7 +926,6 @@ CREATE TABLE `explorations` (
 -- Volcado de datos para la tabla `explorations`
 --
 
-TRUNCATE `explorations`;
 -- --------------------------------------------------------
 
 --
@@ -981,6 +984,8 @@ INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
 --
 -- Estructura de tabla para la tabla `refractions`
 --
+TRUNCATE `refractions`;
+DROP TABLE `refractions`;
 
 CREATE TABLE `refractions` (
   `id` int(11) NOT NULL,
@@ -1027,8 +1032,6 @@ CREATE TABLE `refractions` (
 --
 -- Volcado de datos para la tabla `refractions`
 --
-
-TRUNCATE `refractions`;
 -- --------------------------------------------------------
 
 --
@@ -1056,8 +1059,6 @@ CREATE TABLE `results` (
 --
 -- Volcado de datos para la tabla `results`
 --
-
-TRUNCATE `results`;
 
 -- --------------------------------------------------------
 
