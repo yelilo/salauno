@@ -120,6 +120,9 @@ CREATE TABLE `candidates` (
 -- Estructura de tabla para la tabla `clinics`
 --
 
+TRUNCATE `clinics`;
+DROP TABLE `clinics`;
+
 CREATE TABLE `clinics` (
   `id` varchar(50) NOT NULL,
   `nombre` varchar(50) DEFAULT NULL,
@@ -152,6 +155,9 @@ INSERT INTO `clinics` (`id`, `nombre`, `activo`, `direccion`) VALUES
 -- Estructura de tabla para la tabla `configurations`
 --
 
+TRUNCATE `configurations`;
+DROP TABLE `configurations`;
+
 CREATE TABLE `configurations` (
   `id` int(11) NOT NULL,
   `client_id` text,
@@ -176,6 +182,8 @@ INSERT INTO `configurations` (`id`, `client_id`, `client_secret`, `username`, `p
 --
 -- Estructura de tabla para la tabla `core_render_campos`
 --
+TRUNCATE `core_render_campos`;
+DROP TABLE `core_render_campos`;
 
 CREATE TABLE `core_render_campos` (
   `id` int(11) NOT NULL,
@@ -697,6 +705,9 @@ INSERT INTO `core_render_campos_x` (`id`, `nombre`, `titulo`, `seccion_id`, `for
 -- Estructura de tabla para la tabla `core_render_formularios`
 --
 
+TRUNCATE `core_render_formularios`;
+DROP TABLE `core_render_formularios`;
+
 CREATE TABLE `core_render_formularios` (
   `id` int(11) NOT NULL,
   `stage_id` varchar(50) DEFAULT NULL,
@@ -724,6 +735,9 @@ INSERT INTO `core_render_formularios` (`id`, `stage_id`, `titulo`, `tabla`, `act
 --
 -- Estructura de tabla para la tabla `core_render_secciones`
 --
+
+TRUNCATE `core_render_secciones`;
+DROP TABLE `core_render_secciones`;
 
 CREATE TABLE `core_render_secciones` (
   `id` int(11) NOT NULL,
@@ -779,6 +793,9 @@ INSERT INTO `core_render_secciones` (`id`, `nombre`, `titulo`, `orden`, `activo`
 -- Estructura de tabla para la tabla `core_stage`
 --
 
+TRUNCATE `core_stage`;
+DROP TABLE `core_stage`;
+
 CREATE TABLE `core_stage` (
   `id` int(11) NOT NULL,
   `nombre` varchar(50) DEFAULT NULL,
@@ -808,6 +825,8 @@ INSERT INTO `core_stage` (`id`, `nombre`, `titulo`, `descripcion`, `activo`) VAL
 --
 -- Estructura de tabla para la tabla `displays`
 --
+TRUNCATE `displays`;
+DROP TABLE `displays`;
 
 CREATE TABLE `displays` (
   `id` int(10) UNSIGNED NOT NULL,
@@ -932,6 +951,9 @@ CREATE TABLE `explorations` (
 -- Estructura de tabla para la tabla `migrations`
 --
 
+TRUNCATE `migrations`;
+DROP TABLE `migrations`;
+
 CREATE TABLE `migrations` (
   `migration` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL
@@ -964,6 +986,8 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 --
 -- Estructura de tabla para la tabla `password_resets`
 --
+TRUNCATE `password_resets`;
+DROP TABLE `explorations`;
 
 CREATE TABLE `password_resets` (
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -1037,6 +1061,8 @@ CREATE TABLE `refractions` (
 --
 -- Estructura de tabla para la tabla `results`
 --
+TRUNCATE `results`;
+DROP TABLE `results`;
 
 CREATE TABLE `results` (
   `id` int(11) NOT NULL,
@@ -1065,6 +1091,8 @@ CREATE TABLE `results` (
 --
 -- Estructura de tabla para la tabla `reviews`
 --
+TRUNCATE `reviews`;
+DROP TABLE `reviews`;
 
 CREATE TABLE `reviews` (
   `id` int(10) UNSIGNED NOT NULL,
@@ -1077,6 +1105,8 @@ CREATE TABLE `reviews` (
 --
 -- Estructura de tabla para la tabla `stages`
 --
+TRUNCATE `stages`;
+DROP TABLE `stages`;
 
 CREATE TABLE `stages` (
   `id` int(11) NOT NULL,
@@ -1122,6 +1152,8 @@ INSERT INTO `tipo_consultas` (`id`, `nombre`, `Activo`) VALUES
 --
 -- Estructura de tabla para la tabla `users`
 --
+TRUNCATE `users`;
+DROP TABLE `users`;
 
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
