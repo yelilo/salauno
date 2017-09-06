@@ -8,6 +8,7 @@ use App\Http\Controllers\RenderController;
 use App\Http\Controllers\ConfiguracionController;
 use Session;
 use Redirect;
+use Schema;
 
 
 class WelcomeController extends Controller
@@ -24,11 +25,13 @@ class WelcomeController extends Controller
     public function index()
     {
     	$actualizar = 1;
-    	$candidate = candidate::where('etapa','!=','Enviado a SF')->count();
-    	$version_act = DB::table('configurations')->where('client_id','version_actual')->value('actualizar_sist');
-    	if($version_act){
-    		if($version_act == $this->version_n){
-	    		$actualizar = 0;
+    	if(Schema::hasColumn('configurations','actualizar_sist')){
+    		$candidate = candidate::where('etapa','!=','Enviado a SF')->count();
+    		$version_act = DB::table('configurations')->where('client_id','version_actual')->value('actualizar_sist');
+    		if($version_act){
+    			if($version_act == $this->version_n){
+	    			$actualizar = 0;
+    			}
     		}
     	}
         return view('welcome.index',['candidatos'=>$candidate, 'version'=>$actualizar]);

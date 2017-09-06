@@ -72,7 +72,7 @@ class SeguimientoController extends Controller
                 $total_catarata      = ($candidate->pre_diagnostico == 'Catarata') ? $total_catarata + 1 : $total_catarata;
                 $total_glaucoma      = ($candidate->pre_diagnostico == 'Glaucoma preexistente') ? $total_glaucoma + 1 : $total_glaucoma;
                 $total_conjuntivitis            = ($candidate->pre_diagnostico == 'Conjuntivitis') ? $total_conjuntivitis + 1 : $total_conjuntivitis;
-                $total_excavacion_sospechosa    = ($candidate->pre_diagnostico == 'Excavación Sospechosa') ? $total_excavacion_sospechosa + 1 : $total_excavacion_sospechosa;
+                $total_excavacion_sospechosa    = ($candidate->pre_diagnostico == 'Excavación sospechosa') ? $total_excavacion_sospechosa + 1 : $total_excavacion_sospechosa;
                 $total_fondo_coroideo           = ($candidate->pre_diagnostico == 'Fondo coroideo/ Adelgazamiento de retina') ? $total_fondo_coroideo + 1 : $total_fondo_coroideo;
                 $total_maculopatia              = ($candidate->pre_diagnostico == 'Maculopatía') ? $total_maculopatia + 1 : $total_maculopatia;
                 $total_oculoplastica            = ($candidate->pre_diagnostico == 'Oculoplástica') ? $total_oculoplastica + 1 : $total_oculoplastica;
