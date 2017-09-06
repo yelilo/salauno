@@ -61,9 +61,7 @@ class ExplorationController extends Controller
         $presion_intraocular = $request->Iz_presion_intraocular."/".$request->Der_presion_intraocular;
         $glucosa_capilar = $request->Iz_glucosa_capilar."/".$request->Der_glucosa_capilar;
         $presion_arterial = $request->Iz_presion_arterial."/".$request->Der_presion_arterial;
-        $exploration = exploration::find($request->id);
-        echo($request->id);
-        var_dump($exploration);
+        $exploration = exploration::where('candidate_id','=',$request->id)->first();
             $exploration->campaign_id                           = $campaign->id;
             $exploration->user_id                               = $request->user()->id;
             $exploration->parpados_posicion                     = $request->parpados_posicion;
