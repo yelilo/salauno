@@ -62,6 +62,7 @@ class ExplorationController extends Controller
         $glucosa_capilar = $request->Iz_glucosa_capilar."/".$request->Der_glucosa_capilar;
         $presion_arterial = $request->Iz_presion_arterial."/".$request->Der_presion_arterial;
         $exploration = exploration::find($request->id);
+        echo($request->id);
         var_dump($exploration);
             $exploration->campaign_id                           = $campaign->id;
             $exploration->user_id                               = $request->user()->id;
