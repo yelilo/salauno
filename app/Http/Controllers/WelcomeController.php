@@ -25,8 +25,8 @@ class WelcomeController extends Controller
     public function index()
     {
     	$actualizar = 1;
+    	$candidate = candidate::where('etapa','!=','Enviado a SF')->count();
     	if(Schema::hasColumn('configurations','actualizar_sist')){
-    		$candidate = candidate::where('etapa','!=','Enviado a SF')->count();
     		$version_act = DB::table('configurations')->where('client_id','version_actual')->value('actualizar_sist');
     		if($version_act){
     			if($version_act == $this->version_n){
