@@ -92,7 +92,8 @@ class RefractionController extends Controller
     {
         $etapa = 'Consejeria';
         $campaign = campaign::where('activo','=','Si')->first();
-        $refraction = refraction::find($id);
+        $refraction = refraction::where('candidate_id','=',$id);
+        //$refraction = refraction::find($id);
             $refraction->campaign_id                 = $campaign->id;
             $refraction->user_id                     = $request->user()->id;
             $refraction->od_av_lejana                = $request->od_av_lejana;
