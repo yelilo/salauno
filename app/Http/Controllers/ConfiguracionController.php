@@ -126,7 +126,7 @@ class ConfiguracionController extends Controller
       $Email           = str_replace('@', '%40', $arrayOj->Email);
       $ID_Candidato__c = $arrayOj->ID_Candidato__c;
 
-      $_url = "https://na30.salesforce.com/services/data/v20.0/query/?q=SELECT%20Id%20FROM%20Lead%20WHERE%20FirstName%20%3D%20'".$FirstName."'%20AND%20LastName%20%3D%20'".$LastName."'%20AND%20Phone%20%3D%20'".$MobilePhone."'%20AND%20Email%20%3D%20'".$Email."'";
+      $_url = "https://na30.salesforce.com/services/data/v20.0/query/?q=SELECT%20Id%20FROM%20Lead%20WHERE%20FirstName%20%3D%20'".$FirstName."'%20AND%20LastName%20%3D%20'".$LastName."'%20AND%20ID_Candidato__c%20%3D%20'".$ID_Candidato__c."'";
 
       $curl = curl_init();
 

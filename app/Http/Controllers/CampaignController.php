@@ -125,6 +125,7 @@ class CampaignController extends Controller
                     break;
                 }
                 $res_presion = DB::selectone('select * from explorations where candidate_id = \''.$candidate->id.'\'');
+                $Clinica_de_Interes__c = DB::table('clinics')->where('id','=',$candidate->clinica)->value('nombre');
                     // 'CreatedById'                         => '00536000000uxPYAAY',
 
                 $arrayCandidate = array(
@@ -168,11 +169,10 @@ class CampaignController extends Controller
                     'presion_estado_medicion__c'          => $res_presion->presion_estado_medicion,
                     'Medio_o_Canal__c'                    => 'Campaña',
                     'Medio__c'                            => 'Sistema Campañas',
-                    'Clinica_de_Interes__c'               => $candidate->clinica,
+                    'Clinica_de_Interes__c'               => $Clinica_de_Interes__c,
                 );
 
                 if($candidate->status != 'Con cita'){
-                    var_dump($arrayCandidate);
                     unset($arrayCandidate['Fecha_de_cita__c']);
                     unset($arrayCandidate['hora_consulta__c']);
                     unset($arrayCandidate['tipo_consulta__c']);
