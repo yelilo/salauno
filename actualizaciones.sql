@@ -1,4 +1,6 @@
+ALTER TABLE `configurations` ADD `actualizar_sist` INT NULL AFTER `activo`;
 
+INSERT INTO `configurations` (`id`, `client_id`, `client_secret`, `username`, `password`, `url_tk`, `activo`, `actualizar_sist`) VALUES (NULL, 'version_actual', NULL, NULL, NULL, NULL, 'No', '2');
 
 INSERT INTO `stages` (`id`, `nombre`, `titulo`, `activo`) VALUES
 (7,'enfermeria','Enfermeria','Si');
