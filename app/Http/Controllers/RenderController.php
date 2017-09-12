@@ -120,7 +120,7 @@ class RenderController extends Controller
                 }
             }
 
-            if (($formulario->id == 5 || ($formulario->id == 6 && $seccion->id == 40) || ($formulario->id == 8 && $seccion->id == 41)) && $seccion->nombre != 'candidato' ) {
+            if (($formulario->id == 5 || ($formulario->id == 6 && $seccion->id == 40) || ($formulario->id == 8 && $seccion->id == 41) || ($formulario->id == 3 && $seccion->id == 43) ) && $seccion->nombre != 'candidato' ) {
                 $TotCampos = count($campos);
                 for ($countCp=0; $countCp < $TotCampos; $countCp) {
                     switch ($campos[$countCp]->tipo) {
@@ -489,7 +489,7 @@ class RenderController extends Controller
                 }
             }
 
-            if (($formulario->id == 3 || $formulario->id == 5 || ($formulario->id == 6 && $seccion->id == 40) || ($formulario->id == 8 && $seccion->id == 41)) && $seccion->nombre != 'candidato') {
+            if (($formulario->id == 3 || $formulario->id == 5 || ($formulario->id == 6 && $seccion->id == 40) || ($formulario->id == 8 && $seccion->id == 41) || ($formulario->id == 3 && $seccion->id == 43)) && $seccion->nombre != 'candidato') {
                 $form_render .= '</tbody>
                                 </table>';
             }

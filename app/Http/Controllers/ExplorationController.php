@@ -14,6 +14,7 @@ use App\candidate;
 use App\campaign;
 use App\exploration;
 use App\result;
+use App\refraction;
 
 class ExplorationController extends Controller
 {
@@ -114,13 +115,17 @@ class ExplorationController extends Controller
             $exploration->papila_neovasos                       = $request->papila_neovasos;
             $exploration->papila_vasos_bayoneta                 = $request->papila_vasos_bayoneta;
             $exploration->papila_hemorragia_astila              = $request->papila_hemorragia_astila;
-            $exploration->presion_intraocular                   = $presion_intraocular;
-            $exploration->glucosa_capilar                       = $glucosa_capilar;
-            $exploration->presion_arterial                      = $presion_arterial;
-            $exploration->presion_estado_medicion               = $request->presion_estado_medicion;
             $exploration->papila_otros                          = $request->papila_otros;
             $exploration->prediagnostico                        = 'Si';
         $exploration->save();
+
+        $refraction = refraction::where('candidate_id','=',$request->id)->first();
+
+        $refraction->od_av_lejana = $request->od_av_lejana;
+        $refraction->oi_av_lejana = $request->oi_av_lejana;
+        $refraction->od_cv_estenopeic = $request->od_cv_estenopeic;
+        $refraction->oi_cv_estenopeic = $request->oi_cv_estenopeic;
+        $refraction->save();
 
         // <<< Reglas impresion de prediagnostico
 
