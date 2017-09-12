@@ -63,6 +63,9 @@ class RenderController extends Controller
                                 case 'Optica':
                                     $url = route('refraction.edit',[$id_registro]);
                                     break;
+                                case 'Enfermeria':
+                                    $url = route('enfermeria.edit',[$id_registro]);
+                                    break;
                                 default:
                                     $url = "#";
                                     break;
@@ -92,7 +95,7 @@ class RenderController extends Controller
 								<div class="panel-heading">'.$seccion->titulo.'</div>
 								<div class="panel-body">';
 
-            if (($formulario->id == 3 || $formulario->id == 5 || ($formulario->id == 6 && $seccion->id == 40)) && $seccion->nombre != 'candidato') {
+            if (($formulario->id == 3 || $formulario->id == 5 || ($formulario->id == 6 && $seccion->id == 40) || ($formulario->id == 8 && $seccion->id == 41)) && $seccion->nombre != 'candidato') {
                 if($seccion->nombre == "presion"){
                     $form_render .= '<input type="hidden" name="id" id="id" value="'.$id_registro.'">';
                     $form_render .= '<table class="table">
@@ -117,18 +120,18 @@ class RenderController extends Controller
                 }
             }
 
-            if (($formulario->id == 5 || ($formulario->id == 6 && $seccion->id == 40)) && $seccion->nombre != 'candidato' ) {
+            if (($formulario->id == 5 || ($formulario->id == 6 && $seccion->id == 40) || ($formulario->id == 8 && $seccion->id == 41)) && $seccion->nombre != 'candidato' ) {
                 $TotCampos = count($campos);
                 for ($countCp=0; $countCp < $TotCampos; $countCp) {
                     switch ($campos[$countCp]->tipo) {
                         case 'select':
                             // echo($campo->nombre." ".$campo->class." ".$formulario->id." ".$seccion->id);
-                            if($campo->class == 'campo_unico'){
+                            if($campos[$countCp]->class == 'campo_unico'){
                                 $value = ($id_registro != 0) ? $this->getValue($campos[$countCp],$id_registro) : '' ;
                                 $form_render .= '<tr>
                                                         <td width="60%">'.$campos[$countCp]->titulo.'</td>
                                                         <td colspan="2">';
-                                                        $form_render .= '<select name="'.$campos[$countCp]->nombre.'" id="'.$campos[$countCp]->nombre.'" class="form-control '.$campos[$countCp]->class.'" '.$campos[$countCp]->attr.' style=" '.$obligatorio.'" '.$required.'>';
+                                                        $form_render .= '<select name="'.$campos[$countCp]->nombre.'" id="'.$campos[$countCp]->nombre.'" class="form-control '.$campos[$countCp]->class.'" '.$campos[$countCp]->attr.' style=" '.$campos[$countCp]->obligatorio.'" '.$campos[$countCp]->required.'>';
                                                         $form_render .= '<option value="">Seleccione</option>';
                                                         $opciones = explode(',', $campos[$countCp]->longitud);
                                                         foreach ($opciones as $key => $opcion) {
@@ -486,7 +489,7 @@ class RenderController extends Controller
                 }
             }
 
-            if (($formulario->id == 3 || $formulario->id == 5 || ($formulario->id == 6 && $seccion->id == 40)) && $seccion->nombre != 'candidato') {
+            if (($formulario->id == 3 || $formulario->id == 5 || ($formulario->id == 6 && $seccion->id == 40) || ($formulario->id == 8 && $seccion->id == 41)) && $seccion->nombre != 'candidato') {
                 $form_render .= '</tbody>
                                 </table>';
             }

@@ -73,8 +73,9 @@
                         <li><a href="{{ url('/candidate/create') }}">1. Registro</a></li>
                         {{-- <li><a href="{{ url('/candidate') }}">2. Tamizaje</a></li> --}}
                         <li><a href="{{ url('/exploration') }}">2. Exploración</a></li>
-                        <li><a href="{{ url('/refraction') }}">3. Optica</a></li>
-                        <li><a href="{{ url('/consejeria') }}">4. Consejeria</a></li>
+                        <li><a href="{{ url('/enfermeria') }}">3. Enfermeria</a></li>
+                        <li><a href="{{ url('/refraction') }}">4. Optica</a></li>
+                        <li><a href="{{ url('/consejeria') }}">5. Consejeria</a></li>
                         @if (Auth::user()->id <= 3 )
                             <li><a href="{{ url('/campaign') }}">Campañas</a></li>
                             <li><a href="{{ url('/seguimiento') }}">Seguimiento</a></li>

@@ -53,7 +53,7 @@
                     <li><a href="{{ url('/enfermeria') }}">Enfermeria</a></li>
                     <li><a href="{{ url('/consejeria') }}">Consejeria</a></li>
                     <li><a href="{{ url('http://salauno.force.com/voiceReminder/forcebrain__LeadRegistration?ProcessId=a1n36000000ed9ZAAQ') }}" target="_black">Generar Cita</a></li>
-                    @if (Auth::user()->id == 1)
+                    @if (Auth::user()->id == 1 || Auth::user()->id == 5)
                         <li><a href="{{ url('/campaign') }}">Campañas</a></li>
                         <li><a href="{{ url('/seguimiento') }}">Seguimiento</a></li>
                         <li><a href="{{ url('/seguimiento') }}">Configuracion</a></li>

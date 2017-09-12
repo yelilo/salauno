@@ -14,7 +14,7 @@ use Schema;
 class WelcomeController extends Controller
 {
 
-	private $version_n = 2;
+	private $version_n = 3;
 	private $version_act;
     // use CandidateRequest;
     /**
@@ -45,7 +45,7 @@ class WelcomeController extends Controller
 	$mysql_pass = 'salauno***';
 	$mysql_host = 'localhost';
 	$base_db = 'salauno_campanias';
-	$sql_file = '../salauno_campanias.sql';
+	$sql_file = '../actualizaciones.sql';
 	global $version_n;
 
 	$id_db = mysqli_connect($mysql_host, $mysql_user, $mysql_pass) or die('Error en la conexion');

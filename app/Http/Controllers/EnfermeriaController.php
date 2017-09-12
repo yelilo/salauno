@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\candidate;
 use App\campaign;
+use App\exploration;
 use Session;
 use Redirect;
 
@@ -19,8 +20,15 @@ class EnfermeriaController extends Controller
      */
     public function index()
     {
-        $candidates = candidate::where('etapa','=','Enfermeria')->get();
-        return view('enfermeria.index',['candidates'=>$candidates]);
+        $campaign = campaign::where('activo','=','Si')->first();
+        if ($campaign == null) {
+            Session::flash('message-info','No hay campaña activa');
+            return Redirect::to('campaign');
+        } else {
+            $candidates = candidate::where('etapa','=','Enfermeria')
+                            ->where('campaign_id','=',$campaign->id)->get();
+            return view('enfermeria.index',['candidates'=>$candidates]);
+        }
     }
 
     /**
@@ -63,8 +71,10 @@ class EnfermeriaController extends Controller
      */
     public function edit($id)
     {
+        $render = new RenderController;
+        $form_render = $render->index(8,$id);
         $candidate = candidate::find($id);
-        return view('enfermeria/editar',['candidate'=>$candidate]);
+        return view('enfermeria/editar',['candidate'=>$candidate,'form_render'=>$form_render]);
     }
 
     /**
@@ -76,10 +86,18 @@ class EnfermeriaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $candidate = candidate::find($id);
-        $candidate->fill($request->all());
+        $exploration = exploration::where('candidate_id','=',$id)->first();
+        $presion_intraocular = $request->Iz_presion_intraocular."/".$request->Der_presion_intraocular;
+        $glucosa_capilar = $request->Iz_glucosa_capilar."/".$request->Der_glucosa_capilar;
+        $presion_arterial = $request->Iz_presion_arterial."/".$request->Der_presion_arterial;
+        $exploration->presion_intraocular = $presion_intraocular;
+        $exploration->glucosa_capilar = $glucosa_capilar;
+        $exploration->presion_arterial = $presion_arterial;
+        $exploration->presion_estado_medicion = $request->presion_estado_medicion;
+        $exploration->save();
+        $candidate = candidate::where('id','=',$id)->first();
+        $candidate->etapa = $request->etapa;
         $candidate->save();
-        Session::flash('message','El Candidato "'.$candidate->nombres.' '.$candidate->apellidos.'" se ha enviado a "'.$request->etapa.'"');
         return Redirect::to('enfermeria');
     }
 

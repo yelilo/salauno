@@ -58,9 +58,6 @@ class ExplorationController extends Controller
     public function store(Request $request)
     {
         $campaign    = campaign::where('activo','=','Si')->first();
-        $presion_intraocular = $request->Iz_presion_intraocular."/".$request->Der_presion_intraocular;
-        $glucosa_capilar = $request->Iz_glucosa_capilar."/".$request->Der_glucosa_capilar;
-        $presion_arterial = $request->Iz_presion_arterial."/".$request->Der_presion_arterial;
         $exploration = exploration::where('candidate_id','=',$request->id)->first();
             $exploration->campaign_id                           = $campaign->id;
             $exploration->user_id                               = $request->user()->id;
