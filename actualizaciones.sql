@@ -48,3 +48,5 @@ INSERT INTO `core_render_campos` (`id`, `nombre`, `titulo`, `seccion_id`, `formu
 INSERT INTO `core_render_campos` (`id`, `nombre`, `titulo`, `seccion_id`, `formulario_id`, `obligatorio`, `orden`, `tipo`, `longitud`, `activo`, `tabla`, `script`, `class`, `ayuda`, `placeholder`, `attr`) VALUES (NULL, 'od_av_lejana', 'A.V. Lejana', '43', '3', 'No', '3', 'select', '20,25,30,40,50,60,70,80,100,200,400', 'Si', 'refractions', NULL, NULL, NULL, NULL, NULL);
 
 INSERT INTO `core_render_campos` (`id`, `nombre`, `titulo`, `seccion_id`, `formulario_id`, `obligatorio`, `orden`, `tipo`, `longitud`, `activo`, `tabla`, `script`, `class`, `ayuda`, `placeholder`, `attr`) VALUES (NULL, 'oi_av_lejana', 'A.V. Lejana', '43', '3', 'No', '4', 'select', '20,25,30,40,50,60,70,80,100,200,400', 'Si', 'refractions', NULL, NULL, NULL, NULL, NULL);
+
+UPDATE `core_render_campos` SET `longitud` = 'Enfermeria,Optica,Consejeria' WHERE `core_render_campos`.`id` = 250;
