@@ -194,8 +194,6 @@ class CampaignController extends Controller
                 $respuesta     = $acc->sincCandidato($jsonCandidate);
                 $respuesta     = json_decode($respuesta, true);
 
-                echo "<pre>";
-                echo var_dump($respuesta);
 
                 if (array_key_exists('id', $respuesta)) {
                     $count_ok++;

@@ -270,6 +270,6 @@
           </div>
         </div>
     {{-- modal enfermedades --}}
-    <div style="text-align:right; color:#CCCCCC;">salauno v1.4 - 08/2017</div>
+    <div style="text-align:right; color:#CCCCCC;">salauno v1.4.1 - 08/2017</div>
 </body>
 </html>
